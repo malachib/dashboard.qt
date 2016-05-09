@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Dialogs 1.2 // just for message dialog during test
 
 Rectangle
 {
@@ -24,6 +25,7 @@ Rectangle
     property real startCircumference;
     property real endCircumference;
     property bool leftOriented: true;
+    property int rotationDuration: 2000;
 
     Behavior on startCircumference
     {
@@ -62,12 +64,22 @@ Rectangle
 
     Canvas
     {
+        MouseArea
+        {
+            anchors.fill: parent;
+
+            onClicked:
+            {
+                messageDialog.show("Clicked!");
+            }
+        }
+
         // TODO: exempt text from being rotated
         NumberAnimation on rotation {
           from: 0;
           to: 360;
           loops: Animation.Infinite;
-          duration: 2000
+          duration: rotationDuration
         }
 
         anchors.fill: parent
@@ -114,5 +126,17 @@ Rectangle
             ctx.fill();
         }
     }
+    }
+
+
+    // just for testing
+    MessageDialog {
+        id: messageDialog
+        title: qsTr("May I have your attention, please?")
+
+        function show(caption) {
+            messageDialog.text = caption;
+            messageDialog.open();
+        }
     }
 }
