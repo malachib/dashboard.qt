@@ -26,8 +26,17 @@ ApplicationWindow {
 
     MainForm {
         anchors.fill: parent
-        button1.onClicked: messageDialog.show(qsTr("Button 1 pressed"))
-        button2.onClicked: messageDialog.show(qsTr("Button 2 pressed"))
+        button1.onClicked:
+        {
+            leftTriumverate.state = "on";
+            //messageDialog.show(qsTr("Button 1 pressed"))
+            //leftTriumverate.state = "off";
+        }
+        button2.onClicked:
+        {
+            leftTriumverate.state = "off";
+            //messageDialog.show(qsTr("Button 2 pressed"))
+        }
     }
 
     MessageDialog {
@@ -43,9 +52,81 @@ ApplicationWindow {
     ColumnLayout
     {
         //width: 30
-        height: parent.height
+        height: parent.height - 100
         //spacing: 6
 
+        Repeater
+        {
+            model: 4
+            StatusCircle
+            {
+                width: 20
+                //height: parent.height / 4
+                height: 20
+            }
+        }
+
+        Rectangle
+        {
+            id: leftTriumverate
+            transitions: Transition {
+                NumberAnimation { properties: "x"; easing.type: Easing.InOutQuad; duration: 200 }
+            }
+
+            states:
+            [
+                State
+                {
+                    name: "on"
+                    PropertyChanges {
+                        target: c1
+                        x: 10
+                        y: -10
+                    }
+                    PropertyChanges {
+                        target: c2
+                        x: 20
+                    }
+                    PropertyChanges {
+                        target: c3
+                        x: 10
+                        y: 10
+                    }
+                },
+                State
+                {
+                    name: "off"
+                    PropertyChanges {
+                        target: c1
+                        x: 0
+                    }
+                }
+
+            ]
+
+            StatusCircle
+            {
+                id: c1
+                width: 20
+                height: 20
+            }
+            StatusCircle
+            {
+                id: c2
+                width: 20
+                height: 20
+            }
+            StatusCircle
+            {
+                id: c3
+                //x: 5
+                width: 20
+                height: 20
+            }
+        }
+
+        //StatusCircle
+        /*
         StatusCircle
         {
             id: s1
@@ -69,6 +150,6 @@ ApplicationWindow {
             color: "orange"
             Layout.preferredWidth: 40
             Layout.preferredHeight: 40
-        }
+        } */
     }
 }
