@@ -13,8 +13,8 @@ Rectangle
     Text {
         id: textArea
         //anchor.fill: parent
-        x: width + 1
-        y: height / 2
+        x: parent.width
+        y: (parent.height / 2) - (height / 2)
         color: "white"
         text: "STAT"
         font.family: "Andale Mono"
@@ -29,14 +29,6 @@ Rectangle
         SmoothedAnimation { velocity: 5; duration: 1000 }
     }
 
-    // TODO: exempt text from being rotated
-    NumberAnimation on rotation {
-      from: 0;
-      to: 360;
-      loops: Animation.Infinite;
-      duration: 2000
-    }
-
     Timer
     {
         interval: 1000;
@@ -48,7 +40,8 @@ Rectangle
             //endCircumference = Math.random() * (Math.PI - startCircumference);
             //endCircumference += startCircumference;
             //textArea.text = Date().toString();
-            //textArea.text = qsTr("" + startCircumference);
+            textArea.text = qsTr("STAT: " + startCircumference);
+            //textArea.text = qsTr("STAT");
             //canvas.requestPaint();
         }
     }
@@ -66,6 +59,18 @@ Rectangle
         }
     }
 
+    Canvas
+    {
+        // TODO: exempt text from being rotated
+        NumberAnimation on rotation {
+          from: 0;
+          to: 360;
+          loops: Animation.Infinite;
+          duration: 2000
+        }
+
+        anchors.fill: parent
+        //color: "transparent"
     // inner circle to make outer wedge look more like a small chunk
     Rectangle
     {
@@ -90,10 +95,6 @@ Rectangle
             endCircumference = Math.PI * 2;
             ctx.reset();
 
-            //ctx.fillStyle = "rgba(255,255,255,0.5)";
-            //ctx.globalAlpha = 0.5;
-            //ctx.globalAlpha = 1;
-
             var centreX = width / 2;
             var centreY = height / 2;
 
@@ -112,5 +113,5 @@ Rectangle
             ctx.fill();
         }
     }
-
+    }
 }
