@@ -60,9 +60,9 @@ ApplicationWindow {
             model: 4
             StatusCircle
             {
-                width: 20
+                width: 40
                 //height: parent.height / 4
-                height: 20
+                height: 40
             }
         }
 
@@ -70,7 +70,12 @@ ApplicationWindow {
         {
             id: leftTriumverate
             transitions: Transition {
-                NumberAnimation { properties: "x"; easing.type: Easing.InOutQuad; duration: 200 }
+                NumberAnimation
+                {
+                    properties: "x,y";
+                    easing.type: Easing.InOutQuad;
+                    duration: 200
+                }
             }
 
             states:
@@ -96,10 +101,10 @@ ApplicationWindow {
                 State
                 {
                     name: "off"
-                    PropertyChanges {
+                    /*PropertyChanges {
                         target: c1
                         x: 0
-                    }
+                    }*/
                 }
 
             ]
