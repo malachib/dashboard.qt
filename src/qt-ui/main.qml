@@ -51,6 +51,24 @@ ApplicationWindow {
 
     ColumnLayout
     {
+        x: parent.width - 40
+        height: parent.height
+
+        Repeater
+        {
+            model: 5
+            StatusCircle
+            {
+                leftOriented: false
+                width: 40
+                //height: parent.height / 4
+                height: 40
+            }
+        }
+    }
+
+    ColumnLayout
+    {
         //width: 30
         height: parent.height - 100
         //spacing: 6

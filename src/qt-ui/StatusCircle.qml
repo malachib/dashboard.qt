@@ -13,7 +13,7 @@ Rectangle
     Text {
         id: textArea
         //anchor.fill: parent
-        x: parent.width
+        x: leftOriented ? parent.width : -(width)
         y: (parent.height / 2) - (height / 2)
         color: "white"
         text: "STAT"
@@ -23,6 +23,7 @@ Rectangle
 
     property real startCircumference;
     property real endCircumference;
+    property bool leftOriented: true;
 
     Behavior on startCircumference
     {
@@ -40,7 +41,7 @@ Rectangle
             //endCircumference = Math.random() * (Math.PI - startCircumference);
             //endCircumference += startCircumference;
             //textArea.text = Date().toString();
-            textArea.text = qsTr("STAT: " + startCircumference);
+            textArea.text = qsTr("STAT: " + startCircumference.toFixed(3));
             //textArea.text = qsTr("STAT");
             //canvas.requestPaint();
         }
