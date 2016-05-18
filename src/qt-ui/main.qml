@@ -51,7 +51,8 @@ ApplicationWindow {
 
     ColumnLayout
     {
-        x: parent.width - 40
+        // bringing in from edges because of my goofy TV
+        x: parent.width - 100
         height: parent.height
 
         Repeater
@@ -70,6 +71,8 @@ ApplicationWindow {
     ColumnLayout
     {
         //width: 30
+        // FIX: temporarily bringing in from edges because of my goofy TV
+        x: 60
         height: parent.height - 100
         //spacing: 6
 
