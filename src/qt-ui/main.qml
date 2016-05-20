@@ -49,23 +49,12 @@ ApplicationWindow {
         }
     }
 
-    ColumnLayout
+
+    StatusCircleContainer
     {
         // bringing in from edges because of my goofy TV
         x: parent.width - 100
-        height: parent.height
-
-        Repeater
-        {
-            model: 5
-            StatusCircle
-            {
-                leftOriented: false
-                width: 40
-                //height: parent.height / 4
-                height: 40
-            }
-        }
+        leftOriented: false
     }
 
     ColumnLayout
