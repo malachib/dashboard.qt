@@ -16,11 +16,22 @@ ColumnLayout
         {
             height: 40
 
+            /*
+            Rectangle
+            {
+                width: 40
+                height: 40
+                color: "#666666"
+            }*/
+
             Loader
             {
                 visible: false
                 id: loader1
-                asynchronous: true
+                // this does boot the app a little faster, but the rpi loads each circle super slow
+                // still - I bet used less granularly async will be helpful (a whole panel of circles
+                // instead of 1)
+                //asynchronous: true
                 source: "StatusCircle.qml"
                 width: 40
                 height: 40

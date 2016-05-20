@@ -57,24 +57,20 @@ ApplicationWindow {
         leftOriented: false
     }
 
+    StatusCircleContainer
+    {
+        x: 60
+        model: 4
+        leftOriented: true
+    }
+
     ColumnLayout
     {
         //width: 30
         // FIX: temporarily bringing in from edges because of my goofy TV
         x: 60
-        height: parent.height - 100
+        //height: parent.height - 100
         //spacing: 6
-
-        Repeater
-        {
-            model: 4
-            StatusCircle
-            {
-                width: 40
-                //height: parent.height / 4
-                height: 40
-            }
-        }
 
         Rectangle
         {
@@ -111,10 +107,10 @@ ApplicationWindow {
                 State
                 {
                     name: "off"
-                    /*PropertyChanges {
-                        target: c1
-                        x: 0
-                    }*/
+                    //PropertyChanges {
+                    //    target: c1
+                    //    x: 0
+                    //}
                 }
 
             ]

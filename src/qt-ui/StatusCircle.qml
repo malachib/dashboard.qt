@@ -32,6 +32,9 @@ Rectangle
         SmoothedAnimation { velocity: 5; duration: 1000 }
     }
 
+    // testing shows that as inefficient as these timers may be,
+    // it doesn't seem to be the primary culprit for slow rpi
+    // init
     Timer
     {
         interval: 1000;
@@ -84,48 +87,48 @@ Rectangle
 
         anchors.fill: parent
         //color: "transparent"
-    // inner circle to make outer wedge look more like a small chunk
-    Rectangle
-    {
-        z: 1
-        color: "red"
-        x: parent.width / 8
-        y: parent.height / 8
-        width: parent.width / (8/6)
-        height: parent.height / (8/6)
-        radius: width*0.5
-    }
-
-    Canvas
-    {
-        id: canvas
-        anchors.fill: parent
-        onPaint:
+        // inner circle to make outer wedge look more like a small chunk
+        Rectangle
         {
-            var ctx = getContext("2d");
-            var radius = width / 2;
-            //startCircumference = Math.PI * 0.5;
-            endCircumference = Math.PI * 2;
-            ctx.reset();
-
-            var centreX = width / 2;
-            var centreY = height / 2;
-
-            ctx.beginPath();
-            ctx.fillStyle = "transparent";
-            ctx.moveTo(centreX, centreY);
-            ctx.arc(centreX, centreY, radius, 0, startCircumference, false);
-            ctx.lineTo(centreX, centreY);
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.fillStyle = "rgba(255,50,50,1)";
-            ctx.moveTo(centreX, centreY);
-            ctx.arc(centreX, centreY, radius, startCircumference, endCircumference, false);
-            ctx.lineTo(centreX, centreY);
-            ctx.fill();
+            z: 1
+            color: "red"
+            x: parent.width / 8
+            y: parent.height / 8
+            width: parent.width / (8/6)
+            height: parent.height / (8/6)
+            radius: width*0.5
         }
-    }
+
+        Canvas
+        {
+            id: canvas
+            anchors.fill: parent
+            onPaint:
+            {
+                var ctx = getContext("2d");
+                var radius = width / 2;
+                //startCircumference = Math.PI * 0.5;
+                endCircumference = Math.PI * 2;
+                ctx.reset();
+
+                var centreX = width / 2;
+                var centreY = height / 2;
+
+                ctx.beginPath();
+                ctx.fillStyle = "transparent";
+                ctx.moveTo(centreX, centreY);
+                ctx.arc(centreX, centreY, radius, 0, startCircumference, false);
+                ctx.lineTo(centreX, centreY);
+                ctx.fill();
+
+                ctx.beginPath();
+                ctx.fillStyle = "rgba(255,50,50,1)";
+                ctx.moveTo(centreX, centreY);
+                ctx.arc(centreX, centreY, radius, startCircumference, endCircumference, false);
+                ctx.lineTo(centreX, centreY);
+                ctx.fill();
+            }
+        }
     }
 
 
