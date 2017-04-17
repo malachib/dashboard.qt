@@ -20,9 +20,11 @@ ColumnLayout
         }
         ListElement {
             text: "STAT3"
+            color: "green"
         }
         ListElement {
             text: "STAT#4"
+            color: "green"
         }
         ListElement {
             text: "STAT5"
@@ -59,7 +61,8 @@ ColumnLayout
                 {
                     item.leftOriented = leftOriented;
                     visible = true;
-                    item.statusText = model.text;
+                    item.statusText = model.text
+                    item.statusColor = model.color
                 }
             }
         }

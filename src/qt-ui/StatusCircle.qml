@@ -17,7 +17,7 @@ Rectangle
         x: leftOriented ? parent.width : -(width)
         y: (parent.height / 2) - (height / 2)
         color: "white"
-        text: getStatusText()
+        text: statusText
         font.family: "Andale Mono"
         //verticalAlignment: Text.AlignVCenter
     }
@@ -26,10 +26,12 @@ Rectangle
     property real endCircumference;
     property bool leftOriented: true;
     property int rotationDuration: 2000;
-    property string statusText;
+    property string statusText : "STAT"
+    property variant statusColor
 
-    function getStatusText() {
-        return (statusText.length != 0) ? statusText : "STAT";
+    onStatusColorChanged: {
+        //console.log("changing color to: " + statusColor)
+        if(statusColor) innerCircle.color = statusColor
     }
 
     Behavior on startCircumference
@@ -51,9 +53,7 @@ Rectangle
             //endCircumference = Math.random() * (Math.PI - startCircumference);
             //endCircumference += startCircumference;
             //textArea.text = Date().toString();
-            var _text = getStatusText();
-
-            textArea.text = qsTr(_text + ": " + startCircumference.toFixed(3));
+            textArea.text = qsTr(statusText + ": " + startCircumference.toFixed(3));
             //textArea.text = qsTr("STAT");
             //canvas.requestPaint();
         }
