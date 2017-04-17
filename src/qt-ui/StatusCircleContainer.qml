@@ -9,9 +9,29 @@ ColumnLayout
     property bool leftOriented: false
     property int model: 5
 
+    ListModel
+    {
+        id: testModel
+        ListElement {
+            text: "STAT1"
+        }
+        ListElement {
+            text: "STAT#2"
+        }
+        ListElement {
+            text: "STAT3"
+        }
+        ListElement {
+            text: "STAT#4"
+        }
+        ListElement {
+            text: "STAT5"
+        }
+    }
+
     Repeater
     {
-        model: parent.model
+        model: testModel
         Item
         {
             height: 40
@@ -39,6 +59,7 @@ ColumnLayout
                 {
                     item.leftOriented = leftOriented;
                     visible = true;
+                    item.statusText = model.text;
                 }
             }
         }

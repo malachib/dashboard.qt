@@ -17,7 +17,7 @@ Rectangle
         x: leftOriented ? parent.width : -(width)
         y: (parent.height / 2) - (height / 2)
         color: "white"
-        text: "STAT"
+        text: getStatusText()
         font.family: "Andale Mono"
         //verticalAlignment: Text.AlignVCenter
     }
@@ -26,6 +26,11 @@ Rectangle
     property real endCircumference;
     property bool leftOriented: true;
     property int rotationDuration: 2000;
+    property string statusText;
+
+    function getStatusText() {
+        return (statusText.length != 0) ? statusText : "STAT";
+    }
 
     Behavior on startCircumference
     {
@@ -46,7 +51,9 @@ Rectangle
             //endCircumference = Math.random() * (Math.PI - startCircumference);
             //endCircumference += startCircumference;
             //textArea.text = Date().toString();
-            textArea.text = qsTr("STAT: " + startCircumference.toFixed(3));
+            var _text = getStatusText();
+
+            textArea.text = qsTr(_text + ": " + startCircumference.toFixed(3));
             //textArea.text = qsTr("STAT");
             //canvas.requestPaint();
         }
@@ -90,6 +97,7 @@ Rectangle
         // inner circle to make outer wedge look more like a small chunk
         Rectangle
         {
+            id: innerCircle
             z: 1
             color: "red"
             x: parent.width / 8
@@ -97,7 +105,11 @@ Rectangle
             width: parent.width / (8/6)
             height: parent.height / (8/6)
             radius: width*0.5
+            onColorChanged: {
+
+            }
         }
+
 
         Canvas
         {
@@ -114,15 +126,17 @@ Rectangle
                 var centreX = width / 2;
                 var centreY = height / 2;
 
+                    /*
                 ctx.beginPath();
                 ctx.fillStyle = "transparent";
                 ctx.moveTo(centreX, centreY);
                 ctx.arc(centreX, centreY, radius, 0, startCircumference, false);
                 ctx.lineTo(centreX, centreY);
-                ctx.fill();
+                ctx.fill(); */
 
                 ctx.beginPath();
-                ctx.fillStyle = "rgba(255,50,50,1)";
+                ctx.fillStyle = innerCircle.color
+                //ctx.fillStyle = "rgba(255,50,50,1)";
                 ctx.moveTo(centreX, centreY);
                 ctx.arc(centreX, centreY, radius, startCircumference, endCircumference, false);
                 ctx.lineTo(centreX, centreY);
