@@ -4,6 +4,7 @@
         <file>MainForm.ui.qml</file>
         <file>StatusCircle.qml</file>
         <file>StatusCircleContainer.qml</file>
-        <file>py-test.qml</file>
+        <file>PyTest.qml</file>
+        <file>TabbedRect.qml</file>
     </qresource>
 </RCC>

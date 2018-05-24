@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 // python-invoked test
 Rectangle {
-
+    id: pytest
     StatusCircleContainer
     {
         x: 60
@@ -10,4 +10,7 @@ Rectangle {
         leftOriented: true
     }
 
+    TabbedRect {
+
+    }
 }

@@ -13,7 +13,7 @@ app = QApplication(sys.argv)
 
 # Create the QML user interface.
 view = QQuickView()
-view.setSource(QUrl('py-test.qml'))
+view.setSource(QUrl('PyTest.qml'))
 #view.setResizeMode(QDeclarativeView.SizeRootObjectToView)
 view.setGeometry(100, 100, 400, 240)
 view.show()

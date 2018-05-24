@@ -2,8 +2,10 @@ import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
+import QtQuick.Window 2.0
 
 ApplicationWindow {
+    id: root
     visible: true
     width: 640
     height: 480
@@ -17,9 +19,56 @@ ApplicationWindow {
                 text: qsTr("&Open")
                 onTriggered: console.log("Open action triggered");
             }
+            MenuSeparator {}
+
+            MenuItem {
+                text: qsTr("Nifty")
+                onTriggered:
+                {
+                    // https://stackoverflow.com/questions/8327894/how-can-i-create-a-new-window-from-within-qml
+                    // neat but I want actually a popup.  This does more of an overlay.  cool, but not
+                    // what I need
+                    var component = Qt.createComponent("py-test.qml");
+                    var window = component.createObject(root)
+
+                    // this doesn't do what I expected
+                    //window.show()
+                }
+            }
+
+            MenuItem {
+                text: qsTr("Nifty 2")
+                onTriggered: winld.active = true
+            }
+
             MenuItem {
                 text: qsTr("Exit")
                 onTriggered: Qt.quit();
+            }
+        }
+
+        Menu {
+            title: qsTr("Edit")
+            MenuItem {
+                text: qsTr("TEST")
+            }
+            MenuItem {
+                text: qsTr("TEST2")
+            }
+        }
+    }
+
+    Loader {
+        id: winld
+        active: false
+        sourceComponent: Window {
+            width: 100
+            height: 100
+            color: 'green'
+            visible: true
+            //onClosing: winld.active = false
+            PyTest {
+
             }
         }
     }
