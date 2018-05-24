@@ -18,6 +18,8 @@ import time, threading
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, QCoreApplication, QObject, QUrl
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 
+import forecastio
+
 # This is the type that will be registered with QML.  It must be a
 # sub-class of QObject.
 class Weather(QObject):
@@ -25,11 +27,11 @@ class Weather(QObject):
     temperatureChanged = pyqtSignal(int, arguments=['temperature'])
 
     def foo(self):
-        print(time.ctime())
+        #print(time.ctime())
         self._temperature += 1
         # FIX: get error 'native qt signal is not callable'
-        self.temperatureChanged(self._temperature)
-        threading.Timer(5, self.foo).start()
+        self.temperatureChanged.emit(self._temperature)
+        threading.Timer(1, self.foo).start()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -37,8 +39,7 @@ class Weather(QObject):
         # initial test value
         self._temperature = 77
 
-        threading.Timer(5, self.foo).start()
-        #self.foo()
+        self.foo()
 
     # Define the getter of the 'temperature' property.  The C++ type and
     # Python type of the property is int.
@@ -50,7 +51,15 @@ class Weather(QObject):
     @temperature.setter
     def temperature(self, temperature):
         self._temperature = temperature
-        self.temperatureChanged(temperature)
+        self.temperatureChanged.emit(temperature)
 
-def test_weather_1():
+# would like this async but it needs an event loop outside to kick it off (or an await)
+# but our app.exec_ kind of interrupts that
+def init_subsystem():
     print("got here")
+    file = open("../../conf/darksky-apikey", "r")
+    # read API key and yank off trailing whitespace
+    api_key = file.read().rstrip()
+    lat = -31.967819
+    lng = 115.87718
+    forecast = forecastio.load_forecast(api_key, lat, lng)

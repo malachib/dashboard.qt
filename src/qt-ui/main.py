@@ -10,7 +10,9 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 
-from pyqt.WeatherObject import test_weather_1, Weather
+from pyqt.WeatherObject import init_subsystem, Weather
+
+init_subsystem()
 
 app = QApplication(sys.argv)
 #engine = QQmlApplicationEngine()
