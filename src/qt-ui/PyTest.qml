@@ -44,7 +44,8 @@ Rectangle {
         color: "white"
         id: current_temp
         //text: qsTr("text")
-        text: w1.current_summary
+        //text: w1.current_summary
+        text: w1.current.summary
     }
 
     Binding {

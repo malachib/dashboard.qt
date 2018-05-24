@@ -28,6 +28,8 @@ from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine, QQmlListProp
 
 import forecastio
 
+from pyqt.DarkSky import DataPoint, DataBlock, StaticForecast
+
 api_key = ""
 counter = 0
 
@@ -63,38 +65,6 @@ class Worker(QRunnable):
         self.fn(*self.args, **self.kwargs)
 
 
-# wrapper around forecastio wrapper
-class DataPoint(QObject):
-
-    def __init__(self, datapoint, parent=None):
-        super().__init__(parent)
-
-        self._datapoint = datapoint
-
-    # pyQT will auto-convert this to a C++ QString from a python string
-    @pyqtProperty('QString')
-    def summary(self):
-        print("Retrieving summary: ", self._datapoint.summary)
-
-        return self._datapoint.summary
-
-class DataBlock(QObject):
-
-    def __init__(self, datablock, parent=None):
-        super().__init__(parent)
-
-        self._datablock = datablock
-        self._transformed = [DataPoint(v) for v in datablock.data]
-
-    def wrap(self):
-        return self._transformed
-
-class FakeDataPoint:
-    summary = "Fake Datapoint"
-
-class StaticForecast:
-    def currently():
-        return FakeDataPoint
 
 
 # This is the type that will be registered with QML.  It must be a
@@ -116,7 +86,6 @@ class Weather(QObject):
     def blocking_refresh(self, lat, lng):
         print("refreshing forecast: ", lat, ", ", lng)
         #self._forecast = forecastio.load_forecast(api_key, lat, lng)
-        self._forecast = StaticForecast;
         self.forecastChanged.emit(DataPoint(self._forecast.currently()))
 
     def __init__(self, parent=None):
@@ -146,7 +115,7 @@ class Weather(QObject):
         threadpool.start(worker)
 
     # guidance here http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
-    @pyqtProperty(QQmlListProperty)
+    @pyqtProperty(QQmlListProperty, notify=forecastChanged)
     def hourly(self):
         return QQmlListProperty(DataPoint, self, DataBlock(self._forecast.hourly).wrap)
 
