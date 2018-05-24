@@ -10,6 +10,14 @@ Rectangle {
         id: w1
     }
 
+    Timer {
+        interval: 2000;
+        running: true;
+        repeat: true
+        onTriggered: w1.refresh(-31.967819, 115.87718)
+    }
+
+
     StatusCircleContainer
     {
         x: 30

@@ -11,14 +11,19 @@
 # timer guidance from
 #  https://stackoverflow.com/questions/8600161/executing-periodic-actions-in-python
 
+# callback from QML (aka slots) guidance from
+#  https://stackoverflow.com/questions/19131084/pyqt5-qml-signal-to-python-slot
+
 import sys
 
 import time, threading
 
-from PyQt5.QtCore import pyqtProperty, pyqtSignal, QCoreApplication, QObject, QUrl
+from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 
 import forecastio
+
+api_key = ""
 
 # This is the type that will be registered with QML.  It must be a
 # sub-class of QObject.
@@ -53,13 +58,17 @@ class Weather(QObject):
         self._temperature = temperature
         self.temperatureChanged.emit(temperature)
 
+    @pyqtSlot(float, float)
+    def refresh(self, lat, lng):
+        print("refreshing forecast")
+        # TODO: Make this async
+        self._forecast = forecastio.load_forecast(api_key, lat, lng)
+
+
 # would like this async but it needs an event loop outside to kick it off (or an await)
 # but our app.exec_ kind of interrupts that
 def init_subsystem():
-    print("got here")
+    global api_key
     file = open("../../conf/darksky-apikey", "r")
     # read API key and yank off trailing whitespace
     api_key = file.read().rstrip()
-    lat = -31.967819
-    lng = 115.87718
-    forecast = forecastio.load_forecast(api_key, lat, lng)
