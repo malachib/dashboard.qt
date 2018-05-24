@@ -3,6 +3,7 @@ import QtQuick 2.0
 // python-invoked test
 Rectangle {
     id: pytest
+    color: 'black'
 
     StatusCircleContainer
     {
@@ -13,7 +14,7 @@ Rectangle {
 
     TabbedRect {
         x: 30
-        width: 200
+        width: 300
         height: 200
     }
 }

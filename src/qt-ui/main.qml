@@ -65,6 +65,7 @@ ApplicationWindow {
             width: 300
             height: 300
             //color: 'green'
+            color: '#002000'
             visible: true
             //onClosing: winld.active = false
             PyTest {

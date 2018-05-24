@@ -13,21 +13,25 @@ Rectangle
         onPaint: {
             // get context to draw with
             var ctx = getContext("2d")
+            var indent = 40;
             // setup the stroke
-            ctx.lineWidth = 4
+            ctx.lineWidth = 1
             ctx.strokeStyle = "#009b00"
-            // setup the fill
-            ctx.fillStyle = "#004b00"
+            // setup the fill (transparent)
+            // https://forum.qt.io/topic/51084/canvas-2d-fill-color-by-rgba-string/2
+            ctx.fillStyle = "rgba(0, 20, 0, 0.3)"
             // begin a new path to draw
             ctx.beginPath()
             // top-left start point
-            ctx.moveTo(50,50)
+            ctx.moveTo(0,indent)
+            // left angle one line
+            ctx.lineTo(indent, 0)
             // upper line
-            ctx.lineTo(150,50)
+            ctx.lineTo(width,0)
             // right line
-            ctx.lineTo(150,150)
+            ctx.lineTo(width,height)
             // bottom line
-            ctx.lineTo(50,150)
+            ctx.lineTo(0,height)
             // left line through path closing
             ctx.closePath()
             // fill using fill style
