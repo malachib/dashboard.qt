@@ -62,9 +62,9 @@ ApplicationWindow {
         id: winld
         active: false
         sourceComponent: Window {
-            width: 100
-            height: 100
-            color: 'green'
+            width: 300
+            height: 300
+            //color: 'green'
             visible: true
             //onClosing: winld.active = false
             PyTest {
