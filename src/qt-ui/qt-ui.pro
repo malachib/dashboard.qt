@@ -15,4 +15,5 @@ QML_IMPORT_PATH =
 include(deployment.pri)
 
 DISTFILES += \
-    main.py
+    main.py \
+    pyqt/WeatherObject.py

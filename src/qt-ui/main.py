@@ -8,9 +8,17 @@ from PyQt5.QtQml import QQmlApplicationEngine
 from PyQt5.QtQuick import QQuickView
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPainter, QColor, QPen
+from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
+
+from pyqt.WeatherObject import test_weather_1, Weather
 
 app = QApplication(sys.argv)
 #engine = QQmlApplicationEngine()
+
+# from http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
+# Register the Python type.  Its URI is 'People', it's v1.0 and the type
+# will be called 'Person' in QML.
+qmlRegisterType(Weather, 'WeatherCategory', 1, 0, 'Weather')
 
 # Create the QML user interface.
 view = QQuickView()
