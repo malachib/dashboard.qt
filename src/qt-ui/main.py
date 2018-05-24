@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 
-from pyqt.WeatherObject import init_subsystem, Weather
+from pyqt.WeatherObject import *
 
 init_subsystem()
 
@@ -21,6 +21,7 @@ app = QApplication(sys.argv)
 # Register the Python type.  Its URI is 'People', it's v1.0 and the type
 # will be called 'Person' in QML.
 qmlRegisterType(Weather, 'WeatherCategory', 1, 0, 'Weather')
+qmlRegisterType(DataPoint, 'WeatherCategory', 1, 0, 'DataPoint')
 
 # Create the QML user interface.
 view = QQuickView()

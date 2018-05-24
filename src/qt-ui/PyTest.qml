@@ -38,9 +38,23 @@ Rectangle {
         text: qsTr("text")
     }
 
+    Text {
+        x: 200
+        y: 50
+        color: "white"
+        id: current_temp
+        text: qsTr("text")
+    }
+
     Binding {
         target: name
         property: 'text'
         value: w1.temperature
+    }
+
+    Binding {
+        target: name
+        property: 'text'
+        value: w1.current.summary
     }
 }

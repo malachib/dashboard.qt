@@ -24,7 +24,7 @@ import sys
 import time, threading
 
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl, QThreadPool, QRunnable
-from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
+from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine, QQmlListProperty
 
 import forecastio
 
@@ -63,11 +63,29 @@ class Worker(QRunnable):
         self.fn(*self.args, **self.kwargs)
 
 
+# wrapper around forecastio wrapper
+class DataPoint(QObject):
+
+    def __init__(self, datapoint, parent=None):
+        super().__init__(parent)
+
+        self._datapoint = datapoint
+
+        print("DataPoint initialized: ", datapoint.summary)
+
+    # pyQT will auto-convert this to a C++ QString from a python string
+    @pyqtProperty('QString')
+    def summary(self):
+        return self._datapoint.summary
+
+
 # This is the type that will be registered with QML.  It must be a
 # sub-class of QObject.
 class Weather(QObject):
 
     temperatureChanged = pyqtSignal(int, arguments=['temperature'])
+
+    forecastChanged = pyqtSignal(DataPoint, arguments=['forecast'])
 
     def foo(self):
         #print(time.ctime())
@@ -79,13 +97,15 @@ class Weather(QObject):
     # blocking call, call this via threadpool/worker
     def blocking_refresh(self, lat, lng):
         print("refreshing forecast: ", lat, ", ", lng)
-        #self._forecast = forecastio.load_forecast(api_key, lat, lng)
+        self._forecast = forecastio.load_forecast(api_key, lat, lng)
+        self.forecastChanged.emit(DataPoint(self._forecast.currently()))
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
         # initial test value
         self._temperature = 77
+        self._forecast = None
 
         self.foo()
 
@@ -106,6 +126,18 @@ class Weather(QObject):
         worker = Worker(self.blocking_refresh, lat, lng)
         threadpool.start(worker)
 
+    # guidance here http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
+    @pyqtProperty(QQmlListProperty)
+    def hourly(self):
+        return QQmlListProperty(Person, self, self._guests)
+
+    @pyqtProperty(DataPoint, notify=forecastChanged)
+    def current(self):
+        if self._forecast is None:
+            return None
+        else:
+            return DataPoint(self._forecast.currently())
+
 
 # would like this async but it needs an event loop outside to kick it off (or an await)
 # but our app.exec_ kind of interrupts that
@@ -114,3 +146,11 @@ def init_subsystem():
     file = open("../../conf/darksky-apikey", "r")
     # read API key and yank off trailing whitespace
     api_key = file.read().rstrip()
+
+def raw_test1():
+    lat = -31.967819
+    lng =  115.87718
+    _forecast = forecastio.load_forecast(api_key, lat, lng)
+    DataPoint(_forecast.currently())
+    print("raw_test1: done")
+
