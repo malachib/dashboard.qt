@@ -14,16 +14,54 @@
 # callback from QML (aka slots) guidance from
 #  https://stackoverflow.com/questions/19131084/pyqt5-qml-signal-to-python-slot
 
+# async guidance from
+#  https://martinfitzpatrick.name/article/multithreading-pyqt-applications-with-qthreadpool/
+# (didn't use inbuilt python async/await since it requires an event/thread loop which it seems
+#  qt itself isn't playing nice with... maybe?)
+
 import sys
 
 import time, threading
 
-from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl
+from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl, QThreadPool, QRunnable
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 
 import forecastio
 
 api_key = ""
+counter = 0
+
+threadpool = QThreadPool()
+print("Multithreading with maximum %d threads" % threadpool.maxThreadCount())
+
+class Worker(QRunnable):
+    '''
+    Worker thread
+
+    Inherits from QRunnable to handler worker thread setup, signals and wrap-up.
+
+    :param callback: The function callback to run on this worker thread. Supplied args and
+                     kwargs will be passed through to the runner.
+    :type callback: function
+    :param args: Arguments to pass to the callback function
+    :param kwargs: Keywords to pass to the callback function
+
+    '''
+
+    def __init__(self, fn, *args, **kwargs):
+        super(Worker, self).__init__()
+        # Store constructor arguments (re-used for processing)
+        self.fn = fn
+        self.args = args
+        self.kwargs = kwargs
+
+    @pyqtSlot()
+    def run(self):
+        '''
+        Initialise the runner function with passed args, kwargs.
+        '''
+        self.fn(*self.args, **self.kwargs)
+
 
 # This is the type that will be registered with QML.  It must be a
 # sub-class of QObject.
@@ -37,6 +75,11 @@ class Weather(QObject):
         # FIX: get error 'native qt signal is not callable'
         self.temperatureChanged.emit(self._temperature)
         threading.Timer(1, self.foo).start()
+
+    # blocking call, call this via threadpool/worker
+    def blocking_refresh(self, lat, lng):
+        print("refreshing forecast: ", lat, ", ", lng)
+        #self._forecast = forecastio.load_forecast(api_key, lat, lng)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -60,9 +103,8 @@ class Weather(QObject):
 
     @pyqtSlot(float, float)
     def refresh(self, lat, lng):
-        print("refreshing forecast")
-        # TODO: Make this async
-        self._forecast = forecastio.load_forecast(api_key, lat, lng)
+        worker = Worker(self.blocking_refresh, lat, lng)
+        threadpool.start(worker)
 
 
 # would like this async but it needs an event loop outside to kick it off (or an await)
