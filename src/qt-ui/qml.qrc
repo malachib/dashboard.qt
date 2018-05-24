@@ -4,5 +4,6 @@
         <file>MainForm.ui.qml</file>
         <file>StatusCircle.qml</file>
         <file>StatusCircleContainer.qml</file>
+        <file>py-test.qml</file>
     </qresource>
 </RCC>
