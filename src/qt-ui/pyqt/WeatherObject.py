@@ -71,12 +71,30 @@ class DataPoint(QObject):
 
         self._datapoint = datapoint
 
-        print("DataPoint initialized: ", datapoint.summary)
-
     # pyQT will auto-convert this to a C++ QString from a python string
     @pyqtProperty('QString')
     def summary(self):
+        print("Retrieving summary: ", self._datapoint.summary)
+
         return self._datapoint.summary
+
+class DataBlock(QObject):
+
+    def __init__(self, datablock, parent=None):
+        super().__init__(parent)
+
+        self._datablock = datablock
+        self._transformed = [DataPoint(v) for v in datablock.data]
+
+    def wrap(self):
+        return self._transformed
+
+class FakeDataPoint:
+    summary = "Fake Datapoint"
+
+class StaticForecast:
+    def currently():
+        return FakeDataPoint
 
 
 # This is the type that will be registered with QML.  It must be a
@@ -97,7 +115,8 @@ class Weather(QObject):
     # blocking call, call this via threadpool/worker
     def blocking_refresh(self, lat, lng):
         print("refreshing forecast: ", lat, ", ", lng)
-        self._forecast = forecastio.load_forecast(api_key, lat, lng)
+        #self._forecast = forecastio.load_forecast(api_key, lat, lng)
+        self._forecast = StaticForecast;
         self.forecastChanged.emit(DataPoint(self._forecast.currently()))
 
     def __init__(self, parent=None):
@@ -105,7 +124,7 @@ class Weather(QObject):
 
         # initial test value
         self._temperature = 77
-        self._forecast = None
+        self._forecast = StaticForecast
 
         self.foo()
 
@@ -129,14 +148,17 @@ class Weather(QObject):
     # guidance here http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
     @pyqtProperty(QQmlListProperty)
     def hourly(self):
-        return QQmlListProperty(Person, self, self._guests)
+        return QQmlListProperty(DataPoint, self, DataBlock(self._forecast.hourly).wrap)
 
     @pyqtProperty(DataPoint, notify=forecastChanged)
     def current(self):
-        if self._forecast is None:
-            return None
-        else:
-            return DataPoint(self._forecast.currently())
+        return DataPoint(self._forecast.currently())
+
+    # stop-gap, because I can't get binding on above current.summary to work
+    # (says always that 'current' is null, and can't get summary from it)
+    @pyqtProperty('QString', notify=forecastChanged)
+    def current_summary(self):
+        return self._forecast.currently().summary
 
 
 # would like this async but it needs an event loop outside to kick it off (or an await)
