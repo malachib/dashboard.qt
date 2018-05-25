@@ -49,14 +49,14 @@ class Weather(QObject):
     # blocking call, call this via threadpool/worker
     def blocking_refresh(self, lat, lng):
         print("refreshing forecast: ", lat, ", ", lng)
-        #self._forecast = forecastio.load_forecast(api_key, lat, lng)
+        self._forecast = forecastio.load_forecast(api_key, lat, lng)
         #self._datapoint = DataPoint(self._forecast.currently())
         self.forecastChanged.emit(self._datapoint)
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self._forecast = StaticForecast
+        self._forecast = StaticForecast()
 
     @pyqtSlot(float, float)
     def refresh(self, lat, lng):
@@ -64,9 +64,12 @@ class Weather(QObject):
         threadpool.start(worker)
 
     @pyqtProperty(DataBlock, notify=forecastChanged)
+    def daily(self):
+        return DataBlock(self._forecast.daily())
+
+    @pyqtProperty(DataBlock, notify=forecastChanged)
     def hourly(self):
-        self._hourly = DataBlock(self._forecast.hourly(self._forecast))
-        return self._hourly
+        return DataBlock(self._forecast.hourly())
 
     @pyqtProperty(DataPoint, notify=forecastChanged)
     def current(self):

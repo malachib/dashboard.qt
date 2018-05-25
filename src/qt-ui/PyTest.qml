@@ -66,10 +66,20 @@ Rectangle {
                 anchors.fill: parent
                 model: w1.hourly.data
 
-                delegate: Text {
-                    color: "white"
-                    text: summary
+                delegate: Row
+                {
+                    Text {
+                        color: "white"
+                        text: summary
+                    }
+                    Text {
+                        color: "white"
+                        text: temperature
+                    }
+
+                    spacing: 2
                 }
+
                 spacing: 2
             }
 

@@ -20,6 +20,10 @@ class DataPoint(QObject):
     def summary(self):
         return self._datapoint.summary
 
+    @pyqtProperty(float, constant=True)
+    def temperature(self):
+        return self._datapoint.temperature
+
 class DataBlock(QObject):
 
     def __init__(self, datablock, parent=None):
@@ -41,6 +45,7 @@ class DataBlock(QObject):
 # a fake NATIVE darksky datapoint, not a qml-friendly one
 class FakeDataPoint:
     summary = "Unassigned Datapoint"
+    temperature = 0
 
     def __init__(self, summary = "Fake Datapoint", parent=None):
         super().__init__()
@@ -59,15 +64,18 @@ class FakeDataBlock:
 
     @property
     def data(self):
-        #print("FakeDataBlock count: ", len(self._data))
         return self._data
 
 class StaticForecast:
+    def daily(self):
+        hourlydata = [FakeDataPoint(str('Fake Daily: ') + str(i)) for i in range(10)]
+        return FakeDataBlock(hourlydata)
+
     def hourly(self):
         hourlydata = [FakeDataPoint(str('Fake Hourly: ') + str(i)) for i in range(10)]
         #print("StaticForecast.hourly count: ", len(hourlydata))
         self._hourly = FakeDataBlock(hourlydata)
         return self._hourly
 
-    def currently():
-        return FakeDataPoint
+    def currently(self):
+        return FakeDataPoint()
