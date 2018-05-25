@@ -24,6 +24,7 @@ app = QApplication(sys.argv)
 # will be called 'Person' in QML.
 qmlRegisterType(Weather, 'WeatherCategory', 1, 0, 'Weather')
 qmlRegisterType(DataPoint, 'WeatherCategory', 1, 0, 'DataPoint')
+qmlRegisterType(DataBlock, 'WeatherCategory', 1, 0, 'DataBlock')
 
 # Create the QML user interface.
 view = QQuickView()

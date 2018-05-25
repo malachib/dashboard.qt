@@ -57,15 +57,15 @@ Rectangle {
         width: 300
         height: 200
 
-        Column {
+        Row {
             anchors.fill: parent
             id : mainContainer
 
             ListView {
                 id: hourly_view
                 anchors.fill: parent
-                model: w1.hourly
-                // oddly only showing 1 item
+                model: w1.hourly.data
+
                 delegate: Text {
                     color: "white"
                     text: summary

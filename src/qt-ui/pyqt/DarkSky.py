@@ -3,6 +3,7 @@
 import forecastio
 
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl, QThreadPool, QRunnable
+from PyQt5.QtQml import QQmlListProperty
 
 api_key = ""
 
@@ -24,17 +25,18 @@ class DataBlock(QObject):
     def __init__(self, datablock, parent=None):
         super().__init__(parent)
 
-        self._datablock = datablock
         self._transformed = [DataPoint(v) for v in datablock.data]
+        self._datablock = datablock
+        self._data = QQmlListProperty(DataPoint, self, self._transformed)
 
-        print("DataBlock count: ", len(datablock.data))
+    @pyqtProperty('QString', constant=True)
+    def summary(self):
+        return self._datablock.summary
 
-    def wrap(self):
-        return self._transformed
-
-    @property
+    # guidance here http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
+    @pyqtProperty(QQmlListProperty, constant=True)
     def data(self):
-        return self.wrap()
+        return self._data;
 
 # a fake NATIVE darksky datapoint, not a qml-friendly one
 class FakeDataPoint:
@@ -43,15 +45,13 @@ class FakeDataPoint:
     def __init__(self, summary = "Fake Datapoint", parent=None):
         super().__init__()
 
-        self._summary = summary
         self.summary = summary
 
-#    @property
-#    def summary(self):
-#        return self._summary
 
 # a fake NATIVE darksky datablock, not a qml-friendly one
 class FakeDataBlock:
+    summary = "Fake Data Block (summary)"
+
     def __init__(self, data, parent=None):
         super().__init__()
 

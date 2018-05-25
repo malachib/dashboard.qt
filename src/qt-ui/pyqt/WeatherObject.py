@@ -37,8 +37,6 @@ print("Multithreading with maximum %d threads" % threadpool.maxThreadCount())
 # sub-class of QObject.
 class Weather(QObject):
 
-    temperatureChanged = pyqtSignal(int, arguments=['temperature'])
-
     forecastChanged = pyqtSignal(DataPoint, arguments=['forecast'])
 
     def foo(self):
@@ -58,51 +56,22 @@ class Weather(QObject):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        # initial test value
-        self._temperature = 77
         self._forecast = StaticForecast
-
-        self.foo()
-
-    # Define the getter of the 'temperature' property.  The C++ type and
-    # Python type of the property is int.
-    @pyqtProperty(int, notify=temperatureChanged)
-    def temperature(self):
-        return self._temperature
-
-    # Define the setter of the 'temperature' property.
-    @temperature.setter
-    def temperature(self, temperature):
-        self._temperature = temperature
-        self.temperatureChanged.emit(temperature)
 
     @pyqtSlot(float, float)
     def refresh(self, lat, lng):
         worker = Worker(self.blocking_refresh, lat, lng)
         threadpool.start(worker)
 
-    # guidance here http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
-    @pyqtProperty(QQmlListProperty, notify=forecastChanged)
+    @pyqtProperty(DataBlock, notify=forecastChanged)
     def hourly(self):
-        __hourly = self._forecast.hourly(self._forecast);
-        datablock = DataBlock(__hourly);
-        self._wrapped = datablock.wrap()
-
-        #print("Weather.hourly().len =", len(wrapped))
-
-        self._hourly = QQmlListProperty(DataPoint, self, self._wrapped)
-        return self._hourly;
+        self._hourly = DataBlock(self._forecast.hourly(self._forecast))
+        return self._hourly
 
     @pyqtProperty(DataPoint, notify=forecastChanged)
     def current(self):
         self._datapoint = DataPoint(self._forecast.currently())
         return self._datapoint
-
-    # stop-gap, because I can't get binding on above current.summary to work
-    # (says always that 'current' is null, and can't get summary from it)
-    @pyqtProperty('QString', notify=forecastChanged)
-    def current_summary(self):
-        return self._forecast.currently().summary
 
 
 # would like this async but it needs an event loop outside to kick it off (or an await)
