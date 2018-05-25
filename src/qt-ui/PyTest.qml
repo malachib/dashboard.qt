@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.2
 import QtGraphicalEffects 1.0
 import WeatherCategory 1.0
 
@@ -48,6 +48,22 @@ Rectangle {
             color:"blue"
             //transform:rotation
             antialiasing: true
+    }
+
+    AnimatedImage {
+        id: anim
+        source: "images/anim01.svg"
+        x: 200
+        y: 100
+    }
+
+    Rectangle {
+        property int frames: animation.frameCount
+
+        width: 4; height: 8
+        x: (anim.width - width) * anim.currentFrame / frames
+        y: anim.height
+        color: "red"
     }
 
     Text {
