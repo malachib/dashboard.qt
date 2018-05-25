@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtGraphicalEffects 1.0
 import WeatherCategory 1.0
 
 // python-invoked test
@@ -29,6 +30,24 @@ Rectangle {
         x: 30
         width: 300
         height: 200
+    }
+
+    Image {
+        id: therm
+        fillMode: Image.PreserveAspectFit
+        width: 70
+        x: 200
+        antialiasing: true
+        source: "images/thermometer-outlined-symbol-of-stroke.svg"
+        visible: false
+    }
+
+    ColorOverlay{
+            anchors.fill: therm
+            source:therm
+            color:"blue"
+            //transform:rotation
+            antialiasing: true
     }
 
     Text {
