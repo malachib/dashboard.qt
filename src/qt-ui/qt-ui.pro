@@ -17,4 +17,5 @@ include(deployment.pri)
 DISTFILES += \
     main.py \
     pyqt/WeatherObject.py \
-    pyqt/DarkSky.py
+    pyqt/DarkSky.py \
+    pyqt/Threading.py

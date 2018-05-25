@@ -14,11 +14,6 @@
 # callback from QML (aka slots) guidance from
 #  https://stackoverflow.com/questions/19131084/pyqt5-qml-signal-to-python-slot
 
-# async guidance from
-#  https://martinfitzpatrick.name/article/multithreading-pyqt-applications-with-qthreadpool/
-# (didn't use inbuilt python async/await since it requires an event/thread loop which it seems
-#  qt itself isn't playing nice with... maybe?)
-
 import sys
 
 import time, threading
@@ -29,42 +24,13 @@ from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine, QQmlListProp
 import forecastio
 
 from pyqt.DarkSky import DataPoint, DataBlock, StaticForecast
+from pyqt.Threading import Worker
 
 api_key = ""
 counter = 0
 
 threadpool = QThreadPool()
 print("Multithreading with maximum %d threads" % threadpool.maxThreadCount())
-
-class Worker(QRunnable):
-    '''
-    Worker thread
-
-    Inherits from QRunnable to handler worker thread setup, signals and wrap-up.
-
-    :param callback: The function callback to run on this worker thread. Supplied args and
-                     kwargs will be passed through to the runner.
-    :type callback: function
-    :param args: Arguments to pass to the callback function
-    :param kwargs: Keywords to pass to the callback function
-
-    '''
-
-    def __init__(self, fn, *args, **kwargs):
-        super(Worker, self).__init__()
-        # Store constructor arguments (re-used for processing)
-        self.fn = fn
-        self.args = args
-        self.kwargs = kwargs
-
-    @pyqtSlot()
-    def run(self):
-        '''
-        Initialise the runner function with passed args, kwargs.
-        '''
-        self.fn(*self.args, **self.kwargs)
-
-
 
 
 # This is the type that will be registered with QML.  It must be a
@@ -86,7 +52,8 @@ class Weather(QObject):
     def blocking_refresh(self, lat, lng):
         print("refreshing forecast: ", lat, ", ", lng)
         #self._forecast = forecastio.load_forecast(api_key, lat, lng)
-        self.forecastChanged.emit(DataPoint(self._forecast.currently()))
+        #self._datapoint = DataPoint(self._forecast.currently())
+        self.forecastChanged.emit(self._datapoint)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -121,7 +88,8 @@ class Weather(QObject):
 
     @pyqtProperty(DataPoint, notify=forecastChanged)
     def current(self):
-        return DataPoint(self._forecast.currently())
+        self._datapoint = DataPoint(self._forecast.currently())
+        return self._datapoint
 
     # stop-gap, because I can't get binding on above current.summary to work
     # (says always that 'current' is null, and can't get summary from it)

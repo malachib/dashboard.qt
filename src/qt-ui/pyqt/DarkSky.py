@@ -15,10 +15,8 @@ class DataPoint(QObject):
         self._datapoint = datapoint
 
     # pyQT will auto-convert this to a C++ QString from a python string
-    @pyqtProperty('QString')
+    @pyqtProperty('QString', constant=True)
     def summary(self):
-        print("Retrieving summary: ", self._datapoint.summary)
-
         return self._datapoint.summary
 
 class DataBlock(QObject):
