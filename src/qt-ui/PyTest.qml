@@ -50,6 +50,33 @@ Rectangle {
             antialiasing: true
     }
 
+    Rectangle {
+        color: 'transparent'
+        x: 200
+        y: 200
+        width: 300
+        height: 200
+
+        Column {
+            anchors.fill: parent
+            id : mainContainer
+
+            ListView {
+                id: hourly_view
+                anchors.fill: parent
+                model: w1.hourly
+                // oddly only showing 1 item
+                delegate: Text {
+                    color: "white"
+                    text: summary
+                }
+                spacing: 2
+            }
+
+        }
+
+    }
+
     AnimatedImage {
         id: anim
         source: "images/anim01.svg"
@@ -58,7 +85,7 @@ Rectangle {
     }
 
     Rectangle {
-        property int frames: animation.frameCount
+        property int frames: anim.frameCount
 
         width: 4; height: 8
         x: (anim.width - width) * anim.currentFrame / frames

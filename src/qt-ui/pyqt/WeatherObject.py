@@ -84,7 +84,14 @@ class Weather(QObject):
     # guidance here http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
     @pyqtProperty(QQmlListProperty, notify=forecastChanged)
     def hourly(self):
-        return QQmlListProperty(DataPoint, self, DataBlock(self._forecast.hourly).wrap)
+        __hourly = self._forecast.hourly(self._forecast);
+        datablock = DataBlock(__hourly);
+        self._wrapped = datablock.wrap()
+
+        #print("Weather.hourly().len =", len(wrapped))
+
+        self._hourly = QQmlListProperty(DataPoint, self, self._wrapped)
+        return self._hourly;
 
     @pyqtProperty(DataPoint, notify=forecastChanged)
     def current(self):
@@ -112,4 +119,25 @@ def raw_test1():
     _forecast = forecastio.load_forecast(api_key, lat, lng)
     DataPoint(_forecast.currently())
     print("raw_test1: done")
+
+# works, not called
+def raw_test2():
+    f = StaticForecast()
+
+    hourly = f.hourly()
+
+    for i in hourly:
+        print(i.summary)
+
+# works also, also not called
+def raw_test3():
+    lat = -31.967819
+    lng =  115.87718
+    _forecast = forecastio.load_forecast(api_key, lat, lng)
+    #DataPoint(_forecast.currently())
+    hourly = DataBlock(_forecast.hourly())
+    _hourly = hourly.wrap()
+
+    for i in _hourly:
+        print(i.summary)
 

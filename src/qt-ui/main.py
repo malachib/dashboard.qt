@@ -14,6 +14,8 @@ from pyqt.WeatherObject import *
 
 init_subsystem()
 
+#raw_test3()
+
 app = QApplication(sys.argv)
 #engine = QQmlApplicationEngine()
 
@@ -27,7 +29,7 @@ qmlRegisterType(DataPoint, 'WeatherCategory', 1, 0, 'DataPoint')
 view = QQuickView()
 view.setSource(QUrl('PyTest.qml'))
 #view.setResizeMode(QDeclarativeView.SizeRootObjectToView)
-view.setGeometry(100, 100, 400, 240)
+view.setGeometry(100, 100, 600, 440)
 # ala https://pythonspot.com/pyqt5-colors/
 view.setColor(QColor(0, 30, 0))
 view.show()
