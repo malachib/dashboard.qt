@@ -2,8 +2,9 @@
 
 import forecastio
 
-from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl, QThreadPool, QRunnable
+from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QObject, QUrl, QThreadPool, QRunnable, QDateTime
 from PyQt5.QtQml import QQmlListProperty
+from datetime import date, datetime
 
 api_key = ""
 
@@ -23,6 +24,14 @@ class DataPoint(QObject):
     @pyqtProperty(float, constant=True)
     def temperature(self):
         return self._datapoint.temperature
+
+    @pyqtProperty(QDateTime, constant=True)
+    def time(self):
+        return self._datapoint.time
+
+    @pyqtProperty(float, constant=True)
+    def precipProbability(self):
+        return self._datapoint.precipProbablity
 
 class DataBlock(QObject):
 
@@ -46,6 +55,8 @@ class DataBlock(QObject):
 class FakeDataPoint:
     summary = "Unassigned Datapoint"
     temperature = 0
+    time = datetime.now()
+    precipProbablity = 0.5
 
     def __init__(self, summary = "Fake Datapoint", parent=None):
         super().__init__()

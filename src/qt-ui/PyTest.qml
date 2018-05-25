@@ -74,6 +74,10 @@ Rectangle {
                     }
                     Text {
                         color: "white"
+                        text: time
+                    }
+                    Text {
+                        color: "white"
                         text: temperature
                     }
 
