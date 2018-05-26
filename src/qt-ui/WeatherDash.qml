@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
+//import QtMultimedia 5.0 // get 'image not found'
 import WeatherCategory 1.0
 
 Rectangle {
@@ -31,6 +32,14 @@ Rectangle {
         text: Qt.formatDateTime(darksky.currently.time, "h:mm ap")
     }
 
+    /*
+    Video {
+        id: video
+        width : 800
+        height : 600
+        source: "images/bg.mov"
+    } */
+
     DarkSkyIcon {
         width: 200
         height: 200
@@ -46,7 +55,7 @@ Rectangle {
         anchors.left: parent.left
         //x: 50
         y: 200
-        height: 200
+        height: 220
         Hourly {
             id: hourly
             anchors.margins: 30
@@ -61,7 +70,7 @@ Rectangle {
             running: true
             onTriggered: {
                 if(hourly.currentIndex == hourly.count - 1)
-                    hourly.currentIndex = 1
+                    hourly.currentIndex = 0
                 hourly.incrementCurrentIndex()
             }
         }

@@ -8,54 +8,56 @@ ListView {
     layoutDirection: Qt.LeftToRight
     property color iconColor: "blue"
 
-    delegate: Column
+    delegate: Rectangle
     {
-        Text {
-            color: "white"
-            text: summary
-        }
+        color: 'transparent'
+        width: 150
+        height: parent.height
+        //anchors.margins: 10
+        border.color: '#002000'
+        border.width: 0.5
+        opacity: 0.8
 
         Row {
+            //anchors.bottom: parent.bottom
+            height: parent.height
 
             Text {
+                width: 30
+                //height: 30
+                anchors.bottom: parent.bottom
+                anchors.margins: 10
+                rotation: -90
                 color: "white"
-                text: "    " + temperature + "\xB0 F"
+                text: summary
             }
 
+            Column {
+
+                Text {
+                    color: "white"
+                    text: "    " + temperature + "\xB0 F"
+                }
+
+                Text {
+                    color: "white"
+                    text: "Precip: " + precipIntensity
+                }
+
+                Column {
+                    DarkSkyIcon {
+                        width: 60
+                        height: 60
+                        state: icon
+                        iconColor: root.iconColor
+                    }
+
+                    Text {
+                        color: "white"
+                        text: Qt.formatDateTime(time, "ddd h:mm ap")
+                    }
+                }
+            }
         }
-
-        Row {
-            /*
-            Text {
-                color: "white"
-                text: "Precipitation: " + precipProbablity
-            } */
-
-            Text {
-                color: "white"
-                text: "Precip: " + precipIntensity
-            }
-
-            spacing: 2
-
-        }
-
-        Column {
-
-            DarkSkyIcon {
-                width: 60
-                height: 60
-                state: icon
-                iconColor: root.iconColor
-            }
-
-            Text {
-                color: "white"
-                text: Qt.formatDateTime(time, "ddd h:mm ap")
-            }
-
-        }
-
-        spacing: 2
     }
 }
