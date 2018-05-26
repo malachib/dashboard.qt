@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import forecastio
@@ -21,9 +22,23 @@ class DataPoint(QObject):
     def summary(self):
         return self._datapoint.summary
 
+    @pyqtProperty('QString', constant=True)
+    def icon(self):
+        return self._datapoint.icon
+
+    @pyqtProperty('QString', constant=True)
+    def precipType(self):
+        return self._datapoint.precipType
+
     @pyqtProperty(float, constant=True)
     def temperature(self):
-        return self._datapoint.temperature
+        v = getattr(self._datapoint, "temperature", None)
+        if v is not None:
+            return v
+        else:
+            # do a warning here, runtime could show know better than to call this
+            return -1
+        #return self._datapoint.temperature
 
     @pyqtProperty(QDateTime, constant=True)
     def time(self):
@@ -33,12 +48,49 @@ class DataPoint(QObject):
     def precipProbability(self):
         return self._datapoint.precipProbablity
 
+    @pyqtProperty(float, constant=True)
+    def precipIntensity(self):
+        return self._datapoint.precipIntensity
+
+    @pyqtProperty(float, constant=True)
+    def uvIndex(self):
+        return self._datapoint.uvIndex
+
+    @pyqtProperty(float, constant=True)
+    def ozone(self):
+        return self._datapoint.ozone
+
+    @pyqtProperty(float, constant=True)
+    def windGust(self):
+        return self._datapoint.windGust
+
+
+class HourlyDataPoint(DataPoint):
+
+    def __init__(self, datapoint, parent=DataPoint):
+        super().__init__(datapoint)
+
+class DailyDataPoint(DataPoint):
+
+    def __init__(self, datapoint, parent=DataPoint):
+        super(datapoint).__init__(datapoint)
+
+class CurrentlyDataPoint(DataPoint):
+
+    def __init__(self, datapoint, parent=DataPoint):
+        super(datapoint).__init__(datapoint)
+
+    @pyqtProperty(float, constant=True)
+    def nearestStormDistance(self):
+        return self._datapoint.nearestStormDistance
+
+
 class DataBlock(QObject):
 
     def __init__(self, datablock, parent=None):
         super().__init__(parent)
 
-        self._transformed = [DataPoint(v) for v in datablock.data]
+        self._transformed = [HourlyDataPoint(v) for v in datablock.data]
         self._datablock = datablock
         self._data = QQmlListProperty(DataPoint, self, self._transformed)
 
