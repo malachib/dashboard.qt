@@ -2,11 +2,15 @@ import QtQuick 2.0
 import QtGraphicalEffects 1.0
 
 Rectangle {
+    color: 'transparent'
     Image {
         // FIX: nasty pixellation on these SVG's, what the hell...
         // looks like it's presampled... ugh , here's a hack I don't
         // fully understand though https://stackoverflow.com/questions/37976644/how-to-make-svg-icons-crisp-again-in-qt-5-6-on-high-dpi-screens
         anchors.fill: parent
+        sourceSize.width: 1024
+        sourceSize.height: 1024
+        antialiasing: true
         id: image
         //fillMode: Image.PreserveAspectFit
     }

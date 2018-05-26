@@ -93,6 +93,8 @@ Rectangle {
 
                     DarkSkyIcon {
                         state: icon
+                        width: 50
+                        height: 50
                     }
 
                     /*
