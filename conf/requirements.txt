@@ -1,0 +1,3 @@
+pytz
+python-forecastio
+pyqt5

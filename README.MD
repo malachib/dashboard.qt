@@ -11,3 +11,6 @@ We use an API library dependency found here:
 https://github.com/ZeevG/python-forecast.io
 
 As well as pytz for time zone conversions
+
+Since this is a python3.x project, pip3 is recommended
+(pip3 installation help here https://stackoverflow.com/questions/6587507/how-to-install-pip-with-python-3)
