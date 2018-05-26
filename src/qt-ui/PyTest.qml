@@ -50,6 +50,38 @@ Rectangle {
             antialiasing: true
     }
 
+    Component {
+        // translates from darksky to our own weather icon
+        id: weatherIcon
+
+        Item {
+
+            Image {
+                id: image
+                //state: "rain"
+                source: "images/weather-iconic/raindrop.svg"
+
+                // stuff in datapoint.icon into here
+                states: [
+                    State {
+                        name: "rain"
+                        PropertyChanges {
+                            target: image.source = "images/weather-iconic/raindrop.svg"
+                        }
+                    }
+                ]
+            }
+
+            ColorOverlay{
+                    anchors.fill: image
+                    source:image
+                    color:"blue"
+                    //transform:rotation
+                    antialiasing: true
+            }
+        }
+    }
+
     Rectangle {
         color: 'transparent'
         x: 200
@@ -66,6 +98,7 @@ Rectangle {
                 anchors.fill: parent
                 model: w1.hourly.data
 
+
                 delegate: Row
                 {
                     Text {
@@ -79,6 +112,11 @@ Rectangle {
                     Text {
                         color: "white"
                         text: temperature
+                    }
+
+                    Loader {
+                        sourceComponent: weatherIcon
+                        //state: "rain" does not do what we want
                     }
 
                     spacing: 2
