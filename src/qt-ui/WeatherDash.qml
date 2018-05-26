@@ -1,6 +1,10 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
+
+import QtLocation 5.3
+import QtPositioning 5.0
 //import QtMultimedia 5.0 // get 'image not found'
+
 import WeatherCategory 1.0
 
 Rectangle {
@@ -40,6 +44,22 @@ Rectangle {
         source: "images/bg.mov"
     } */
 
+    Plugin {
+        id: aPlugin
+    }
+
+    GeocodeModel {
+        id: geocodeModel
+        plugin: aPlugin
+        autoUpdate: false
+        query: "605 N. Marguerita #3, Alhambra, 91801"
+        onLocationsChanged: {
+            var result = geocodeModel.get(0)
+            console.log("Got here 2") // never called
+        }
+    }
+
+    // 'current' big display
     Row {
         DarkSkyIcon {
             width: 200
@@ -88,6 +108,8 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 hourly.incrementCurrentIndex();
+                geocodeModel.update()
+                console.log("Geocodemodel online: " + aPlugin.supportsGeocoding(Plugin.AnyGeocodingFeatures))
             }
         }
 
