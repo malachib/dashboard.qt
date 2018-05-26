@@ -23,7 +23,7 @@ from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine, QQmlListProp
 
 import forecastio
 
-from pyqt.DarkSky import DataPoint, DataBlock, StaticForecast
+from pyqt.DarkSky import *
 from pyqt.Threading import Worker
 
 api_key = ""
@@ -65,11 +65,11 @@ class Weather(QObject):
 
     @pyqtProperty(DataBlock, notify=forecastChanged)
     def daily(self):
-        return DataBlock(self._forecast.daily())
+        return DataBlock(self._forecast.daily(), DailyDataPoint)
 
     @pyqtProperty(DataBlock, notify=forecastChanged)
     def hourly(self):
-        return DataBlock(self._forecast.hourly())
+        return DataBlock(self._forecast.hourly(), HourlyDataPoint)
 
     @pyqtProperty(DataPoint, notify=forecastChanged)
     def current(self):

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# not using 'hasattr' according to https://hynek.me/articles/hasattr/
+
 import forecastio
 
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QObject, QUrl, QThreadPool, QRunnable, QDateTime
@@ -87,10 +89,10 @@ class CurrentlyDataPoint(DataPoint):
 
 class DataBlock(QObject):
 
-    def __init__(self, datablock, parent=None):
+    def __init__(self, datablock, DataPointType, parent=None):
         super().__init__(parent)
 
-        self._transformed = [HourlyDataPoint(v) for v in datablock.data]
+        self._transformed = [DataPointType(v) for v in datablock.data]
         self._datablock = datablock
         self._data = QQmlListProperty(DataPoint, self, self._transformed)
 
