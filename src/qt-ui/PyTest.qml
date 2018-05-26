@@ -50,18 +50,6 @@ Rectangle {
             antialiasing: true
     }
 
-    Rectangle {
-        color: 'transparent'
-        x: 50
-        y: 200
-        height: 200
-        width: 600
-        Hourly {
-            model: w1.hourly.data
-            iconColor: "#00A010"
-        }
-    }
-
     /*
     Rectangle {
         color: 'transparent'

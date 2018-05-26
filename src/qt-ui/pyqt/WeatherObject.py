@@ -72,7 +72,7 @@ class Weather(QObject):
         return DataBlock(self._forecast.hourly(), HourlyDataPoint)
 
     @pyqtProperty(DataPoint, notify=forecastChanged)
-    def current(self):
+    def currently(self):
         self._datapoint = DataPoint(self._forecast.currently())
         return self._datapoint
 

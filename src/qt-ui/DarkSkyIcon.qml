@@ -72,7 +72,7 @@ Rectangle {
         anchors.fill: image
         source: image
         color: iconColor
-        visible: true
+        visible: false
     }
 
     // now resize it with the mipmap smoothing

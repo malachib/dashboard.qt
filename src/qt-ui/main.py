@@ -28,7 +28,8 @@ qmlRegisterType(DataBlock, 'WeatherCategory', 1, 0, 'DataBlock')
 
 # Create the QML user interface.
 view = QQuickView()
-view.setSource(QUrl('PyTest.qml'))
+#view.setSource(QUrl('PyTest.qml'))
+view.setSource(QUrl('WeatherDash.qml'))
 #view.setResizeMode(QDeclarativeView.SizeRootObjectToView)
 view.setGeometry(100, 100, 600, 440)
 # ala https://pythonspot.com/pyqt5-colors/
