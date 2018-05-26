@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.1
 
 ListView {
     id: root
@@ -13,31 +14,48 @@ ListView {
             color: "white"
             text: summary
         }
-        Text {
-            color: "white"
-            text: Qt.formatDateTime(time, "h:mm ap")
-        }
-        Text {
-            color: "white"
-            text: temperature
+
+        Row {
+
+            Text {
+                color: "white"
+                text: "    " + temperature + "\xB0 F"
+            }
+
         }
 
-        DarkSkyIcon {
-            width: 100
-            height: 100
-            state: icon
-            iconColor: root.iconColor
+        Row {
+            /*
+            Text {
+                color: "white"
+                text: "Precipitation: " + precipProbablity
+            } */
+
+            Text {
+                color: "white"
+                text: "Precip: " + precipIntensity
+            }
+
+            spacing: 2
+
         }
 
-        /*
-        Loader {
-            sourceComponent: DarkSkyIcon
-            // thanks to https://stackoverflow.com/questions/33536881/set-loader-item-property
-            onLoaded: item.state = icon
-        } */
+        Column {
+
+            DarkSkyIcon {
+                width: 60
+                height: 60
+                state: icon
+                iconColor: root.iconColor
+            }
+
+            Text {
+                color: "white"
+                text: Qt.formatDateTime(time, "ddd h:mm ap")
+            }
+
+        }
 
         spacing: 2
     }
-
-    spacing: 2
 }

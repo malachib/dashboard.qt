@@ -8,6 +8,9 @@ Rectangle {
         // presample at a reasonably high res
         sourceSize.width: 1024
         sourceSize.height: 1024
+
+        fillMode: Image.PreserveAspectCrop
+
         id: image
         visible: false // going through a transform pipeline so don't render here
     }
@@ -85,6 +88,10 @@ Rectangle {
 
     ShaderEffect {
         anchors.fill: parent
+
+        clip: true
+
+        scale: 1.3
         property var source: src
     }
 }

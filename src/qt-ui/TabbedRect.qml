@@ -13,7 +13,7 @@ Rectangle
         onPaint: {
             // get context to draw with
             var ctx = getContext("2d")
-            var indent = 40;
+            var indent = 30;
             // setup the stroke
             ctx.lineWidth = 1
             ctx.strokeStyle = "#009b00"

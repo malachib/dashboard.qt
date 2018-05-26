@@ -11,6 +11,8 @@ from datetime import date, datetime
 
 api_key = ""
 
+import pytz
+
 # wrapper around forecastio wrapper
 class DataPoint(QObject):
 
@@ -46,11 +48,19 @@ class DataPoint(QObject):
 
     @pyqtProperty(QDateTime, constant=True)
     def time(self):
-        return self._datapoint.time
+        utctime = self._datapoint.time
+        _utctime = pytz.utc.localize(utctime)
+        adjustedtime = _utctime.astimezone(pytz.timezone("America/Los_Angeles"))
+
+        return adjustedtime
 
     @pyqtProperty(float, constant=True)
-    def precipProbability(self):
-        return self._datapoint.precipProbablity
+    def precipProbablity(self):
+        v = getattr(self._datapoint, "precipProbablity", None)
+        if v is not None:
+            return v
+        else:
+            return -1
 
     @pyqtProperty(float, constant=True)
     def precipIntensity(self):
@@ -113,6 +123,7 @@ class FakeDataPoint:
     temperature = 0
     time = datetime.now()
     precipProbablity = 0.5
+    precipIntensity = 0
     icon = "clear-day"
 
     def __init__(self, summary = "Fake Datapoint", parent=None):

@@ -38,6 +38,7 @@ print("Multithreading with maximum %d threads" % threadpool.maxThreadCount())
 class Weather(QObject):
 
     forecastChanged = pyqtSignal(DataPoint, arguments=['forecast'])
+    _units = "us"
 
     def foo(self):
         #print(time.ctime())
@@ -49,7 +50,7 @@ class Weather(QObject):
     # blocking call, call this via threadpool/worker
     def blocking_refresh(self, lat, lng):
         print("refreshing forecast: ", lat, ", ", lng)
-        self._forecast = forecastio.load_forecast(api_key, lat, lng)
+        self._forecast = forecastio.load_forecast(api_key, lat, lng, units=self._units)
         #self._datapoint = DataPoint(self._forecast.currently())
         self.forecastChanged.emit(self._datapoint)
 
@@ -62,6 +63,14 @@ class Weather(QObject):
     def refresh(self, lat, lng):
         worker = Worker(self.blocking_refresh, lat, lng)
         threadpool.start(worker)
+
+    @pyqtProperty('QString')
+    def units(self):
+        return self._units
+
+    @units.setter
+    def units(self, value):
+        self._units = value
 
     @pyqtProperty(DataBlock, notify=forecastChanged)
     def daily(self):
