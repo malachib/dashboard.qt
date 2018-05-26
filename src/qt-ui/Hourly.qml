@@ -15,7 +15,7 @@ ListView {
         }
         Text {
             color: "white"
-            text: time
+            text: Qt.formatDateTime(time, "h:mm ap")
         }
         Text {
             color: "white"
