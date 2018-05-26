@@ -69,5 +69,8 @@
         <file>images/weather-iconic/wind-high.svg</file>
         <file>images/weather-iconic/wind.svg</file>
         <file>images/weather-iconic/windsock.svg</file>
+        <file>Hourly.qml</file>
+        <file>WeatherDash.qml</file>
+        <file>DarkSkyIcon.qml</file>
     </qresource>
 </RCC>
