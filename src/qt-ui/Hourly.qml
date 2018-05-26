@@ -1,9 +1,11 @@
 import QtQuick 2.0
 
 ListView {
+    id: root
     anchors.fill: parent
     orientation: ListView.Horizontal
     layoutDirection: Qt.LeftToRight
+    property color iconColor: "blue"
 
     delegate: Column
     {
@@ -24,6 +26,7 @@ ListView {
             width: 100
             height: 100
             state: icon
+            iconColor: root.iconColor
         }
 
         /*

@@ -3,16 +3,13 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     color: 'transparent'
+    property color iconColor: "blue"
     Image {
-        // FIX: nasty pixellation on these SVG's, what the hell...
-        // looks like it's presampled... ugh , here's a hack I don't
-        // fully understand though https://stackoverflow.com/questions/37976644/how-to-make-svg-icons-crisp-again-in-qt-5-6-on-high-dpi-screens
-        anchors.fill: parent
+        // presample at a reasonably high res
         sourceSize.width: 1024
         sourceSize.height: 1024
-        antialiasing: true
         id: image
-        //fillMode: Image.PreserveAspectFit
+        visible: false // going through a transform pipeline so don't render here
     }
 
     // stuff in datapoint.icon into here
@@ -69,11 +66,25 @@ Rectangle {
 
     ]
 
+    // change color of it
     ColorOverlay {
+        id: overlay
         anchors.fill: image
         source: image
-        color:"blue"
-        //transform:rotation
-        antialiasing: true
+        color: iconColor
+        visible: true
+    }
+
+    // now resize it with the mipmap smoothing
+    // https://stackoverflow.com/questions/23286666/qml-image-smooth-property-not-working
+    ShaderEffectSource {
+        id: src
+        sourceItem: overlay
+        mipmap: true
+    }
+
+    ShaderEffect {
+        anchors.fill: parent
+        property var source: src
     }
 }

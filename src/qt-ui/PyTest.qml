@@ -58,6 +58,7 @@ Rectangle {
         width: 600
         Hourly {
             model: w1.hourly.data
+            iconColor: "#00A010"
         }
     }
 
