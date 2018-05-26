@@ -20,16 +20,24 @@ ListView {
 
         Row {
             //anchors.bottom: parent.bottom
+            // trying to get text_summary to 'horizontally center' within its rotated scope
             height: parent.height
 
-            Text {
-                width: 30
-                //height: 30
+            Item {
+                width: text_summary.width
+                height: text_summary.height
+
                 anchors.bottom: parent.bottom
                 anchors.margins: 10
+            Text {
+                id: text_summary
+                width: 30
+                //anchors.bottom: parent.bottom
+                //horizontalAlignment: Text.AlignHCenter
                 rotation: -90
                 color: "white"
                 text: summary
+            }
             }
 
             Column {

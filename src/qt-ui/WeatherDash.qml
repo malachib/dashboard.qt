@@ -40,11 +40,31 @@ Rectangle {
         source: "images/bg.mov"
     } */
 
-    DarkSkyIcon {
-        width: 200
-        height: 200
-        state: darksky.currently.icon
-        iconColor: "blue"
+    Row {
+        DarkSkyIcon {
+            width: 200
+            height: 200
+            state: darksky.currently.icon
+            iconColor: "blue"
+        }
+
+        Column {
+            Text { color: "white"; text: darksky.currently.temperature + "\xB0 F" }
+            Text { color: "white"; text: darksky.currently.summary }
+        }
+
+        // FIX: ugly space buffer but it will do
+        Rectangle {
+            color: 'transparent'
+            width: 100
+            height: 1
+        }
+
+        Text {
+            text: "00:00"
+            color: '#30C030'
+            font.pointSize: 80
+        }
     }
 
 
@@ -62,6 +82,13 @@ Rectangle {
             model: darksky.hourly.data
             iconColor: "#00A010"
             clip: true
+        }
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                hourly.incrementCurrentIndex();
+            }
         }
 
         Timer {
