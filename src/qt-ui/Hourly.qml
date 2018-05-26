@@ -2,6 +2,8 @@ import QtQuick 2.0
 
 ListView {
     anchors.fill: parent
+    orientation: ListView.Horizontal
+    layoutDirection: Qt.LeftToRight
 
     delegate: Column
     {

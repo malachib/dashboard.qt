@@ -51,14 +51,17 @@ Rectangle {
     }
 
     Rectangle {
+        color: 'transparent'
         x: 50
         y: 200
         height: 200
+        width: 600
         Hourly {
             model: w1.hourly.data
         }
     }
 
+    /*
     Rectangle {
         color: 'transparent'
         x: 200
@@ -97,12 +100,11 @@ Rectangle {
                         height: 50
                     }
 
-                    /*
                     Loader {
                         sourceComponent: DarkSkyIcon
                         // thanks to https://stackoverflow.com/questions/33536881/set-loader-item-property
                         onLoaded: item.state = icon
-                    } */
+                    }
 
                     spacing: 2
                 }
@@ -112,7 +114,7 @@ Rectangle {
 
         }
 
-    }
+    } */
 
     AnimatedImage {
         id: anim
