@@ -55,29 +55,70 @@ Rectangle {
         id: weatherIcon
 
         Item {
-
             Image {
                 id: image
-                //state: "rain"
-                source: "images/weather-iconic/raindrop.svg"
-
-                // stuff in datapoint.icon into here
-                states: [
-                    State {
-                        name: "rain"
-                        PropertyChanges {
-                            target: image.source = "images/weather-iconic/raindrop.svg"
-                        }
-                    }
-                ]
             }
 
-            ColorOverlay{
-                    anchors.fill: image
-                    source:image
-                    color:"blue"
-                    //transform:rotation
-                    antialiasing: true
+            // stuff in datapoint.icon into here
+            states: [
+                State {
+                    name: "rain"
+                    PropertyChanges {
+                        target: image
+                        source: "images/weather-iconic/raindrop.svg"
+                    }
+                },
+                State {
+                    name: "clear-day"
+                    PropertyChanges {
+                        target: image
+                        source: "images/weather-iconic/sun.svg"
+                    }
+                },
+                State {
+                    name: "wind"
+                    PropertyChanges {
+                        target: image
+                        source: "images/weather-iconic/wind.svg"
+                    }
+                },
+                State {
+                    name: "cloudy"
+                    PropertyChanges {
+                        target: image
+                        source: "images/weather-iconic/clouds.svg"
+                    }
+                },
+                State {
+                    name: "partly-cloudy-day"
+                    PropertyChanges {
+                        target: image
+                        source: "images/weather-iconic/sun-cloud.svg"
+                    }
+                },
+                State {
+                    name: "partly-cloudy-night"
+                    PropertyChanges {
+                        target: image
+                        source: "images/weather-iconic/moon-cloud.svg"
+                    }
+                },
+                State {
+                    name: "clear-night"
+                    PropertyChanges {
+                        target: image
+                        source: "images/weather-iconic/moon.svg"
+                    }
+                }
+
+            ]
+
+            ColorOverlay {
+                anchors.fill: image
+                source: image
+                color:"blue"
+                //transform:rotation
+                antialiasing: true
             }
         }
     }
@@ -116,7 +157,8 @@ Rectangle {
 
                     Loader {
                         sourceComponent: weatherIcon
-                        //state: "rain" does not do what we want
+                        // thanks to https://stackoverflow.com/questions/33536881/set-loader-item-property
+                        onLoaded: item.state = icon
                     }
 
                     spacing: 2

@@ -26,6 +26,8 @@ class DataPoint(QObject):
 
     @pyqtProperty('QString', constant=True)
     def icon(self):
+        # FIX: getting more of these than we expect or render
+        # print("Icon: '" + self._datapoint.icon + "'")
         return self._datapoint.icon
 
     @pyqtProperty('QString', constant=True)
@@ -111,6 +113,7 @@ class FakeDataPoint:
     temperature = 0
     time = datetime.now()
     precipProbablity = 0.5
+    icon = "clear-day"
 
     def __init__(self, summary = "Fake Datapoint", parent=None):
         super().__init__()
