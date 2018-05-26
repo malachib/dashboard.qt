@@ -48,9 +48,20 @@ Rectangle {
         id: aPlugin
     }
 
+    // not good embedding these credentials here, but Plugins are so fiddly I want to
+    // see things working before investing in one particular one
+    // As expected, didn't work right - an OpenSSL version incompatibility
+    Plugin {
+        id: herePlugin
+        name: "here"
+        PluginParameter { name: "here.app_id"; value: "NakRhCgD3TQnba9n0h7c" }
+        PluginParameter { name: "here.token"; value: "qbR95f74brodOvj02b5_EQ" }
+        PluginParameter { name: "here.proxy"; value: "system" }
+    }
+
     GeocodeModel {
         id: geocodeModel
-        plugin: aPlugin
+        plugin: herePlugin
         autoUpdate: false
         query: "605 N. Marguerita #3, Alhambra, 91801"
         onLocationsChanged: {
