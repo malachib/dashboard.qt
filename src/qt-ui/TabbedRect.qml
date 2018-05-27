@@ -38,6 +38,11 @@ Rectangle
             ctx.fill()
             // stroke using line width and stroke style
             ctx.stroke()
+
+            // +++ EXPERIMENTAL, not doing anything yet
+            // notch out things
+            ctx.clip()
+            // ---
         }
     }
 }

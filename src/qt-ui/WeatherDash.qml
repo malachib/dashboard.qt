@@ -24,8 +24,18 @@ Rectangle {
         onGeocodeUpdated: darksky.refresh(loc.latitude, loc.longitude);
     }
 
+    Geocoder {
+        id: geocoder_aux
+        name: "Cypress, CA"
+        onGeocodeUpdated: darksky_aux.refresh(loc.latitude, loc.longitude);
+    }
+
     Weather {
         id: darksky
+    }
+
+    Weather {
+        id: darksky_aux
     }
 
     Text {
@@ -72,12 +82,11 @@ Rectangle {
         anchors.right: parent.right
         anchors.margins: 10
         anchors.left: parent.left
-        //x: 50
-        y: 200
-        height: 220
+        y: 190
+        height: 170
         Hourly {
             id: hourly
-            anchors.margins: 30
+            anchors.margins: 10
             model: darksky.hourly.data
             iconColor: "#00A010"
             clip: true

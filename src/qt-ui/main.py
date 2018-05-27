@@ -35,7 +35,7 @@ view = QQuickView()
 #view.setSource(QUrl('PyTest.qml'))
 view.setSource(QUrl('WeatherDash.qml'))
 #view.setResizeMode(QDeclarativeView.SizeRootObjectToView)
-view.setGeometry(100, 100, 600, 440)
+view.setGeometry(100, 100, 750, 480)
 # ala https://pythonspot.com/pyqt5-colors/
 view.setColor(QColor(0, 30, 0))
 view.show()
