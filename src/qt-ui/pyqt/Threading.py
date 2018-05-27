@@ -6,7 +6,10 @@
 #  qt itself isn't playing nice with... maybe?)
 
 
-from PyQt5.QtCore import QRunnable, pyqtSlot
+from PyQt5.QtCore import QRunnable, pyqtSlot, QThreadPool
+
+threadpool = QThreadPool()
+print("Multithreading with maximum %d threads" % threadpool.maxThreadCount())
 
 class Worker(QRunnable):
     '''

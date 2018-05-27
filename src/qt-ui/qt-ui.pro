@@ -18,4 +18,5 @@ DISTFILES += \
     main.py \
     pyqt/WeatherObject.py \
     pyqt/DarkSky.py \
-    pyqt/Threading.py
+    pyqt/Threading.py \
+    pyqt/Geocoder.py

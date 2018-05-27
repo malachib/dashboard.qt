@@ -4,7 +4,7 @@ import QtQuick.Controls 2.2
 import QtLocation 5.3
 import QtPositioning 5.0
 
-import "qml/config"
+//import "qml/config"
 
 //import QtMultimedia 5.0 // get 'image not found'
 
@@ -16,6 +16,11 @@ Rectangle {
 
     TabbedRect {
         anchors.fill: parent
+    }
+
+    Geocoder {
+        id: geocoder
+        name: "Alhambra, CA"
     }
 
     Weather {
@@ -86,7 +91,7 @@ Rectangle {
         Column {
             Text { color: "white"; text: darksky.currently.temperature + "\xB0 F" }
             Text { color: "white"; text: darksky.currently.summary }
-            Text { color: "white"; text: darksky.home }
+            Text { color: "white"; text: geocoder.loc.latitude }
         }
 
         // FIX: ugly space buffer but it will do

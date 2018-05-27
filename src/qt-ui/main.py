@@ -11,6 +11,7 @@ from PyQt5.QtGui import QPainter, QColor, QPen
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 
 from pyqt.WeatherObject import *
+from pyqt.Geocoder import Geocoder
 
 geocode_test1()
 
@@ -27,6 +28,7 @@ app = QApplication(sys.argv)
 qmlRegisterType(Weather, 'WeatherCategory', 1, 0, 'Weather')
 qmlRegisterType(DataPoint, 'WeatherCategory', 1, 0, 'DataPoint')
 qmlRegisterType(DataBlock, 'WeatherCategory', 1, 0, 'DataBlock')
+qmlRegisterType(Geocoder, 'WeatherCategory', 1, 0, 'Geocoder')
 
 # Create the QML user interface.
 view = QQuickView()

@@ -18,20 +18,18 @@ import sys
 
 import time, threading
 
-from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl, QThreadPool, QRunnable
+from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl, QRunnable
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine, QQmlListProperty
 
 import forecastio
 import geocoder
 
 from pyqt.DarkSky import *
-from pyqt.Threading import Worker
+from pyqt.Threading import Worker, threadpool
+from pyqt.Geocoder import *
 
 api_key = ""
 counter = 0
-
-threadpool = QThreadPool()
-print("Multithreading with maximum %d threads" % threadpool.maxThreadCount())
 
 
 # This is the type that will be registered with QML.  It must be a
