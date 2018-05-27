@@ -34,6 +34,14 @@ Rectangle {
         id: darksky
     }
 
+    ListModel {
+        id: additional_regions
+        ListElement {
+            name: "Thida's"
+            location: "Cypress, CA"
+        }
+    }
+
     Weather {
         id: darksky_aux
     }
@@ -109,6 +117,17 @@ Rectangle {
                 if(hourly.currentIndex == hourly.count - 1)
                     hourly.currentIndex = 0
                 hourly.incrementCurrentIndex()
+            }
+        }
+    }
+
+    ListView {
+        id: lst_additional_regions
+        model: additional_regions
+
+        delegate: Column {
+            TabbedRect {
+
             }
         }
     }
