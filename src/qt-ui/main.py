@@ -13,7 +13,7 @@ from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 from pyqt.WeatherObject import *
 from pyqt.Geocoder import Geocoder
 
-geocode_test1()
+#geocode_test1()
 
 init_subsystem()
 

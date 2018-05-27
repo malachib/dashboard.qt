@@ -21,11 +21,18 @@ Rectangle {
     Geocoder {
         id: geocoder
         name: "Alhambra, CA"
-        onGeocodeUpdated: darksky.refresh(loc.latitude, loc.longitude);
     }
 
     Weather {
         id: darksky
+    }
+
+    Timer {
+        interval: 1000 * 60 * 60; // 1 hour
+        running: true;
+        repeat: true
+        triggeredOnStart: true
+        onTriggered: darksky.refresh(-31.967819, 115.87718)
     }
 
     Text {
@@ -36,6 +43,40 @@ Rectangle {
         opacity: 0.2
         color: "white"
         text: Qt.formatDateTime(darksky.currently.time, "h:mm ap")
+    }
+
+    /*
+    Video {
+        id: video
+        width : 800
+        height : 600
+        source: "images/bg.mov"
+    } */
+
+    Plugin {
+        id: aPlugin
+    }
+
+    // not good embedding these credentials here, but Plugins are so fiddly I want to
+    // see things working before investing in one particular one
+    // As expected, didn't work right - an OpenSSL version incompatibility
+    Plugin {
+        id: herePlugin
+        name: "here"
+        PluginParameter { name: "here.app_id"; value: "NakRhCgD3TQnba9n0h7c" }
+        PluginParameter { name: "here.token"; value: "qbR95f74brodOvj02b5_EQ" }
+        PluginParameter { name: "here.proxy"; value: "system" }
+    }
+
+    GeocodeModel {
+        id: geocodeModel
+        plugin: herePlugin
+        autoUpdate: false
+        query: "605 N. Marguerita #3, Alhambra, 91801"
+        onLocationsChanged: {
+            var result = geocodeModel.get(0)
+            console.log("Got here 2") // never called
+        }
     }
 
     // 'current' big display
@@ -50,7 +91,7 @@ Rectangle {
         Column {
             Text { color: "white"; text: darksky.currently.temperature + "\xB0 F" }
             Text { color: "white"; text: darksky.currently.summary }
-            Text { color: "white"; text: geocoder.name }
+            Text { color: "white"; text: geocoder.loc.latitude }
         }
 
         // FIX: ugly space buffer but it will do
@@ -108,7 +149,7 @@ Rectangle {
         anchors.right: last_updated.left
         anchors.bottom: parent.bottom
         width: 100
-        opacity: 0.05
+        opacity: 0.2
         rightPadding: 200
         text: "Hi"
         onClicked: {
