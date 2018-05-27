@@ -123,3 +123,7 @@ def raw_test3():
     for i in _hourly:
         print(i.summary)
 
+def geocode_test1():
+    g = geocoder.arcgis("Alhambra, CA")
+    print(g[0].latlng)
+

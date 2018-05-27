@@ -14,6 +14,8 @@ from pyqt.WeatherObject import *
 
 init_subsystem()
 
+geocode_test1()
+
 #raw_test3()
 
 app = QApplication(sys.argv)
