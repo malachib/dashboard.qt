@@ -35,6 +35,7 @@ class Geocoder(QObject):
         threadpool.start(worker)
 
     @pyqtProperty(QGeoCoordinate)
+    # still says non notifiable.  Try a string, maybe it doesnt like the QGeoCoordinate
     def loc(self, notify=geocodeUpdated):
         return self._result
 
