@@ -12,6 +12,7 @@ import geocoder
 class Geocoder(QObject):
 
     geocodeUpdated = pyqtSignal(QGeoCoordinate, arguments=['geocode'])
+    geocodeUpdated2 = pyqtSignal(QGeoCoordinate, arguments=['geocode2'])
 
     def blocking_refresh(self):
         self._g = geocoder.arcgis(self._name)
@@ -34,8 +35,8 @@ class Geocoder(QObject):
         worker = Worker(self.blocking_refresh)
         threadpool.start(worker)
 
-    @pyqtProperty(QGeoCoordinate)
+    @pyqtProperty(QGeoCoordinate, notify=geocodeUpdated)
     # still says non notifiable.  Try a string, maybe it doesnt like the QGeoCoordinate
-    def loc(self, notify=geocodeUpdated):
+    def loc(self):
         return self._result
 
