@@ -28,14 +28,6 @@ Rectangle {
         id: darksky
     }
 
-    ListModel {
-        id: additional_regions
-        ListElement {
-            name: "Thida's"
-            location: "Cypress, CA"
-        }
-    }
-
     Text {
         id: last_updated
         anchors.right: parent.right
@@ -113,6 +105,13 @@ Rectangle {
         }
     }
 
+
+    ListModel {
+        id: additional_regions
+        ListElement { name: "Thida's"; location: "Cypress, CA" }
+    }
+
+
     TabbedRect {
         anchors.right: parent.right
         anchors.margins: 10
@@ -121,57 +120,27 @@ Rectangle {
         anchors.bottom: parent.bottom
 
         ListView {
-            id: lst_additional_regions
             model: additional_regions
-            width: parent.width
-            height: parent.height
+            anchors.fill: parent
 
+            // per-hourly-batch item
             delegate: Item {
                 height: 50
                 width: parent.width
 
-                //Text { color: 'white'; text: location }
-                Column {
-                    Geocoder {
-                        id: geocoder_aux
-                        name: location
-                        onGeocodeUpdated: darksky_aux.refresh(loc.latitude, loc.longitude);
-                    }
+                Geocoder {
+                    id: geocoder_aux
+                    name: location
+                    onGeocodeUpdated: darksky_aux.refresh(loc.latitude, loc.longitude);
+                }
 
-                    Weather {
-                        id: darksky_aux
-                        onForecastUpdated:
-                        {
-                            console.log('got here: ' + darksky_aux.hourly.data.length)
-                        }
-                    }
+                Weather { id: darksky_aux }
 
-
-                    /*
-                    Hourly {
-                        id: hourly_aux
-                        height: parent.height
-                        width: lst_additional_regions.width
-                        model: darksky_aux.hourly.data
-                        iconSize: 30
-                        iconColor: "#00A010"
-                        //clip: true
-                    } */
-                    ListView {
-                        id: fake_hourly
-                        anchors.fill: parent
-                        model: darksky_aux.hourly.data
-                        orientation: ListView.Horizontal
-                        layoutDirection: Qt.LeftToRight
-
-                        // TODO: I still have something to learn about ListView layout
-                        delegate: Component {
-                            Item {
-                                //width: 50
-                                Text { color: 'white'; text: time }
-                            }
-                        }
-                    }
+                Hourly {
+                    model: darksky_aux.hourly.data
+                    iconSize: 30
+                    iconColor: "#00A010"
+                    //clip: true
                 }
             }
         }
@@ -184,7 +153,7 @@ Rectangle {
         width: 100
         opacity: 0.05
         rightPadding: 200
-        text: "Hi"
+        text: "Config"
         onClicked: {
             // TODO: Once I figure how to do a popup or something similar, set up a config area
             var c = Qt.createComponent("qml/config/Geocode.qml")
