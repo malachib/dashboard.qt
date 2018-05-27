@@ -73,6 +73,10 @@ class Weather(QObject):
     def units(self, value):
         self._units = value
 
+    @pyqtProperty('QString', constant=True)
+    def home(self):
+        return home_name
+
     @pyqtProperty(DataBlock, notify=forecastChanged)
     def daily(self):
         return DataBlock(self._forecast.daily(), DailyDataPoint)
@@ -124,6 +128,10 @@ def raw_test3():
         print(i.summary)
 
 def geocode_test1():
-    g = geocoder.arcgis("Alhambra, CA")
+    global home_latlng
+    global home_name
+    home_name="Alhambra, CA"
+    g = geocoder.arcgis(home_name)
     print(g[0].latlng)
+    home_latlng = g[0]
 

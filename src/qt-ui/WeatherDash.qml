@@ -3,6 +3,9 @@ import QtQuick.Controls 2.2
 
 import QtLocation 5.3
 import QtPositioning 5.0
+
+import "qml/config"
+
 //import QtMultimedia 5.0 // get 'image not found'
 
 import WeatherCategory 1.0
@@ -28,6 +31,7 @@ Rectangle {
     }
 
     Text {
+        id: last_updated
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: 10
@@ -82,6 +86,7 @@ Rectangle {
         Column {
             Text { color: "white"; text: darksky.currently.temperature + "\xB0 F" }
             Text { color: "white"; text: darksky.currently.summary }
+            Text { color: "white"; text: darksky.home }
         }
 
         // FIX: ugly space buffer but it will do
@@ -97,7 +102,6 @@ Rectangle {
             font.pointSize: 80
         }
     }
-
 
     TabbedRect {
         color: 'transparent'
@@ -136,4 +140,19 @@ Rectangle {
         }
     }
 
+    Button {
+        anchors.right: last_updated.left
+        anchors.bottom: parent.bottom
+        width: 100
+        opacity: 0.2
+        rightPadding: 200
+        text: "Hi"
+        onClicked: {
+            // TODO: Once I figure how to do a popup or something similar, set up a config area
+            var c = Qt.createComponent("qml/config/Geocode.qml")
+            //var window = c.createObject(c)
+
+            //window.show()
+        }
+    }
 }

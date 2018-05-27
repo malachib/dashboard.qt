@@ -12,9 +12,9 @@ from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 
 from pyqt.WeatherObject import *
 
-init_subsystem()
-
 geocode_test1()
+
+init_subsystem()
 
 #raw_test3()
 
