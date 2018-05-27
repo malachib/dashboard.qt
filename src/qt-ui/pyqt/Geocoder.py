@@ -11,12 +11,13 @@ import geocoder
 # sub-class of QObject.
 class Geocoder(QObject):
 
-    geocodeUpdated = pyqtSignal(QGeoCoordinate, arguments=['geocodeUpdated'])
+    geocodeUpdated = pyqtSignal(QGeoCoordinate, arguments=['geocode'])
 
     def blocking_refresh(self):
         self._g = geocoder.arcgis(self._name)
         self._result = QGeoCoordinate(self._g[0].lat, self._g[0].lng)
         self.geocodeUpdated.emit(self._result)
+        print("Emitted: ", self._g[0])
 
     def __init__(self, parent=None):
         super().__init__(parent)
