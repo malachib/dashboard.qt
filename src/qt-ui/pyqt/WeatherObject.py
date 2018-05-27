@@ -22,6 +22,7 @@ from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, Q
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine, QQmlListProperty
 
 import forecastio
+import geocoder
 
 from pyqt.DarkSky import *
 from pyqt.Threading import Worker

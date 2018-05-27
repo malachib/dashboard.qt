@@ -119,8 +119,8 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 hourly.incrementCurrentIndex();
-                geocodeModel.update()
-                console.log("Geocodemodel online: " + aPlugin.supportsGeocoding(Plugin.AnyGeocodingFeatures))
+                //geocodeModel.update()
+                //console.log("Geocodemodel online: " + aPlugin.supportsGeocoding(Plugin.AnyGeocodingFeatures))
             }
         }
 
