@@ -41,7 +41,8 @@ Rectangle
 
             // +++ EXPERIMENTAL, not doing anything yet
             // notch out things
-            ctx.clip()
+            // this line i think crashes it
+            //ctx.clip()
             // ---
         }
     }

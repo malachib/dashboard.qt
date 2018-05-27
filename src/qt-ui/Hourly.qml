@@ -7,6 +7,7 @@ ListView {
     orientation: ListView.Horizontal
     layoutDirection: Qt.LeftToRight
     property color iconColor: "blue"
+    property real iconSize: 60
 
     delegate: Rectangle
     {
@@ -54,8 +55,8 @@ ListView {
 
                 Column {
                     DarkSkyIcon {
-                        width: 60
-                        height: 60
+                        width: iconSize
+                        height: iconSize
                         state: icon
                         iconColor: root.iconColor
                     }

@@ -36,7 +36,7 @@ counter = 0
 # sub-class of QObject.
 class Weather(QObject):
 
-    forecastChanged = pyqtSignal(DataPoint, arguments=['forecast'])
+    forecastUpdated = pyqtSignal(DataPoint, arguments=['forecast'])
     _units = "us"
 
     def foo(self):
@@ -51,7 +51,7 @@ class Weather(QObject):
         #print("refreshing forecast: ", lat, ", ", lng)
         self._forecast = forecastio.load_forecast(api_key, lat, lng, units=self._units)
         self._datapoint = DataPoint(self._forecast.currently())
-        self.forecastChanged.emit(self._datapoint)
+        self.forecastUpdated.emit(self._datapoint)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -76,15 +76,15 @@ class Weather(QObject):
     def home(self):
         return home_name
 
-    @pyqtProperty(DataBlock, notify=forecastChanged)
+    @pyqtProperty(DataBlock, notify=forecastUpdated)
     def daily(self):
         return DataBlock(self._forecast.daily(), DailyDataPoint)
 
-    @pyqtProperty(DataBlock, notify=forecastChanged)
+    @pyqtProperty(DataBlock, notify=forecastUpdated)
     def hourly(self):
         return DataBlock(self._forecast.hourly(), HourlyDataPoint)
 
-    @pyqtProperty(DataPoint, notify=forecastChanged)
+    @pyqtProperty(DataPoint, notify=forecastUpdated)
     def currently(self):
         return self._datapoint
 
