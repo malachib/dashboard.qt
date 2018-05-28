@@ -65,6 +65,13 @@ Rectangle {
             color: '#30C030'
             font.pointSize: 80
         }
+
+        // not quite ready, doesn't 0-pad the way we want
+        /*
+        DigitalClockFace {
+            color: '#30C030'
+            pointsize: 80
+        } */
     }
 
     TabbedRect {
