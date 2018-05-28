@@ -1,19 +1,27 @@
 import QtQuick 2.0
 
-Item {
+import "file.js" as JS // polyfill for padStart() // TODO: rename it
+
+Rectangle {
     id: root
+    color: 'transparent'
 
     property int hours
     property int minutes
     property int seconds
     property bool seconds_visible: false
+    property bool is_24_hour: false
     property color color
     property real pointsize: 1
 
     Row {
         Text {
             id: _hours
-            text: hours
+            text: {
+                var s = "" + hours;
+
+                return s.padStart(2);
+            }
             font.pointSize: pointsize
             color: root.color
         }
@@ -27,7 +35,11 @@ Item {
 
         Text {
             id: _minutes
-            text: minutes
+            text: {
+                var s = "" + minutes;
+
+                return s.padStart(2, '0');
+            }
             font.pointSize: pointsize
             color: root.color
         }
@@ -46,6 +58,11 @@ Item {
             visible: seconds_visible
             font.pointSize: pointsize
             color: root.color
+        }
+
+        Text {
+            id: ampm
+            visible: false
         }
     }
 }

@@ -55,23 +55,26 @@ Rectangle {
 
         // FIX: ugly space buffer but it will do
         Rectangle {
+            id: spacer
             color: 'transparent'
             width: 100
             height: 1
         }
 
+        /*
         Text {
             text: "00:00"
             color: '#30C030'
             font.pointSize: 80
-        }
+        } */
 
-        // not quite ready, doesn't 0-pad the way we want
-        /*
+        // Shouldn't have to do anchor but for some reason we do
+        // clock face now looks right but still not animated or populated
         DigitalClockFace {
+            anchors.left: spacer.right
             color: '#30C030'
             pointsize: 80
-        } */
+        }
     }
 
     TabbedRect {

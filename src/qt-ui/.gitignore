@@ -71,5 +71,6 @@ Thumbs.db
 *.dll
 *.exe
 
-# qml-compiled files
+# qml/js-compiled files
 *.qmlc
+*.jsc
