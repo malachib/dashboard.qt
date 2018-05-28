@@ -68,9 +68,24 @@ Rectangle {
             font.pointSize: 80
         } */
 
+        Timer {
+            interval: 500
+            running: true
+            repeat: true
+            onTriggered: {
+                var date = new Date();
+
+                clock.hours = date.getHours();
+                clock.minutes = date.getMinutes();
+                clock.show_colons = !clock.show_colons;
+            }
+        }
+
         // Shouldn't have to do anchor but for some reason we do
         // clock face now looks right but still not animated or populated
         DigitalClockFace {
+            id: clock
+            is_24_hour: false
             anchors.left: spacer.right
             color: '#30C030'
             pointsize: 80

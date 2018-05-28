@@ -9,8 +9,9 @@ Rectangle {
     property int hours
     property int minutes
     property int seconds
-    property bool seconds_visible: false
     property bool is_24_hour: false
+    property bool show_seconds: false
+    property bool show_colons: true
     property color color
     property real pointsize: 1
 
@@ -18,6 +19,9 @@ Rectangle {
         Text {
             id: _hours
             text: {
+                if(is_24_hour)
+                    ampm.text = hours >= 12 ? "pm" : "am";
+
                 var s = "" + hours;
 
                 return s.padStart(2);
@@ -30,7 +34,7 @@ Rectangle {
             id: sep1
             text: ':'
             font.pointSize: pointsize
-            color: root.color
+            color: show_colons ? root.color : 'transparent'
         }
 
         Text {
@@ -47,22 +51,22 @@ Rectangle {
         Text {
             id: sep2
             text: ':'
-            color: root.color
+            color: show_colons ? root.color : 'transparent'
             font.pointSize: pointsize
-            visible: seconds_visible
+            visible: show_seconds
         }
 
         Text {
             id: _seconds
             text: seconds
-            visible: seconds_visible
+            visible: show_seconds
             font.pointSize: pointsize
             color: root.color
         }
 
         Text {
             id: ampm
-            visible: false
+            visible: !is_24_hour
         }
     }
 }
