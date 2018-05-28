@@ -20,6 +20,7 @@ import time, threading
 
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QCoreApplication, QObject, QUrl, QRunnable
 from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine, QQmlListProperty
+from PyQt5.QtPositioning import QGeoCoordinate
 
 import forecastio
 import geocoder
@@ -63,6 +64,16 @@ class Weather(QObject):
     def refresh(self, lat, lng):
         worker = Worker(self.blocking_refresh, lat, lng)
         threadpool.start(worker)
+
+    # though it's stated overloads are supported
+    # http://pyqt.sourceforge.net/Docs/PyQt5/signals_slots.html
+    # something makes us call this one even when the parameters are float, float
+    @pyqtSlot(QGeoCoordinate)
+    def refresh_coordinates(self, coordinates):
+        ## print('got here:', coordinates)
+        #worker = Worker(self.blocking_refresh, coordinates.latitude, coordinates.longitude)
+        #threadpool.start(worker)
+        self._noop = None
 
     @pyqtProperty('QString')
     def units(self):
