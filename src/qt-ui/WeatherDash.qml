@@ -4,6 +4,8 @@ import QtQuick.Controls 2.2
 import QtLocation 5.3
 import QtPositioning 5.0
 
+import "qml/shader"
+
 //import "qml/config"
 
 //import QtMultimedia 5.0 // get 'image not found'
@@ -28,6 +30,54 @@ Rectangle {
         id: darksky
     }
 
+    /*
+      fiddling with his source code, but not there yet
+    ApplicationSettings {
+        id: appSettings
+    }
+
+    ShaderTerminal {
+        //property alias title: terminal.title
+        id: mainShader
+        //dispX: (12 / width) * appSettings.windowScaling
+        //dispY: (12 / height) * appSettings.windowScaling
+        anchors.right: parent.right
+        width: 200
+        height: 100
+        y: 100
+        source: current_disp
+        blurredSource: current_disp
+
+        Loader{
+                id: frame
+                anchors.fill: parent
+
+                property real displacementLeft: item ? item.displacementLeft : 0
+                property real displacementTop: item ? item.displacementTop : 0
+                property real displacementRight: item ? item.displacementRight : 0
+                property real displacementBottom: item ? item.displacementBottom : 0
+
+                asynchronous: true
+                visible: status === Loader.Ready
+
+                z: 2.1
+                source: appSettings.frameSource
+            }
+    }
+
+    Rectangle {
+        id: terminalWindow // EXPERIMENTAL: to satisfy ShaderTerminal
+        anchors.right: parent.right
+        width: 200
+        height: 100
+
+        Rectangle {
+            anchors.fill: parent
+        }
+    }
+
+    */
+
     Text {
         id: last_updated
         anchors.right: parent.right
@@ -40,6 +90,8 @@ Rectangle {
 
     // 'current' big display
     Row {
+        id: current_disp
+
         DarkSkyIcon {
             width: 200
             height: 200

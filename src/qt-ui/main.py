@@ -33,11 +33,15 @@ qmlRegisterType(Geocoder, 'WeatherCategory', 1, 0, 'Geocoder')
 # Create the QML user interface.
 view = QQuickView()
 #view.setSource(QUrl('PyTest.qml'))
+# To Satisfy cool-retro-term needs
+view.rootContext().setContextProperty('devicePixelRatio', app.devicePixelRatio())
+
 view.setSource(QUrl('WeatherDash.qml'))
 #view.setResizeMode(QDeclarativeView.SizeRootObjectToView)
 view.setGeometry(100, 100, 750, 480)
 # ala https://pythonspot.com/pyqt5-colors/
 view.setColor(QColor(0, 30, 0))
+
 view.show()
 
 app.exec_()

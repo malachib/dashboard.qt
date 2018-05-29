@@ -76,4 +76,8 @@
         <file>DigitalClockFace.qml</file>
         <file>WeatherChart.qml</file>
     </qresource>
+    <qresource prefix="/qml/shader">
+        <file>qml/shader/ShaderTerminal.qml</file>
+        <file>../../ext/cool-retro-term/app/qml/ApplicationSettings.qml</file>
+    </qresource>
 </RCC>

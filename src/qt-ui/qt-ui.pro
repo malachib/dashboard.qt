@@ -19,4 +19,5 @@ DISTFILES += \
     pyqt/WeatherObject.py \
     pyqt/DarkSky.py \
     pyqt/Threading.py \
-    pyqt/Geocoder.py
+    pyqt/Geocoder.py    \
+    qml/shader/utils.js

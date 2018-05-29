@@ -1,0 +1,4 @@
+[submodule "ext/cool-retro-term"]
+	path = ext/cool-retro-term
+	url = https://github.com/Swordfish90/cool-retro-term.git
+	ignore = all
