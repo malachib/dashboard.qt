@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += positioning qml quick
 
 CONFIG += c++11
 

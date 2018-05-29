@@ -74,5 +74,6 @@
         <file>DarkSkyIcon.qml</file>
         <file>qml/config/Geocode.qml</file>
         <file>DigitalClockFace.qml</file>
+        <file>WeatherChart.qml</file>
     </qresource>
 </RCC>
