@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.1
 
 import QtLocation 5.3
 import QtPositioning 5.0
@@ -88,6 +89,10 @@ Rectangle {
         text: Qt.formatDateTime(darksky.currently.time, "h:mm ap")
     }
 
+    GridLayout {
+        rows: 3
+    }
+
     // 'current' big display
     Row {
         id: current_disp
@@ -156,9 +161,11 @@ Rectangle {
         Hourly {
             id: hourly
             anchors.margins: 10
+            anchors.fill: parent
             model: darksky.hourly.data
             iconColor: "#00A010"
             clip: true
+            opacity: 0.8
         }
 
         MouseArea {
@@ -199,10 +206,11 @@ Rectangle {
         ListView {
             model: additional_regions
             anchors.fill: parent
+            opacity: 0.8
 
             // per-hourly-batch item
             delegate: Item {
-                height: 50
+                height: 75
                 width: parent.width
 
                 Geocoder {
@@ -213,11 +221,44 @@ Rectangle {
 
                 Weather { id: darksky_aux }
 
-                Hourly {
-                    model: darksky_aux.hourly.data
-                    iconSize: 30
-                    iconColor: "#00A010"
-                    //clip: true
+                RowLayout {
+                    anchors.fill: parent
+
+                    Item {
+                        //width: text_summary.width
+                        //height: parent.height
+                        //color: 'blue'
+                        Layout.minimumWidth:  text_summary.width
+                        Layout.minimumHeight: 20
+                        Layout.maximumHeight: parent.height
+                        //Layout.fillWidth: true
+                        anchors.bottom: parent.bottom
+
+                        Text {
+                            id: text_summary
+                            width: 30
+                            //anchors.bottom: parent.bottom
+                            //horizontalAlignment: Text.AlignHCenter
+                            rotation: -90
+                            color: "white"
+                            text: name
+                        }
+
+                    }
+
+                    Hourly {
+                        showSummary: false
+                        model: darksky_aux.hourly.data
+                        iconSize: 30
+                        itemWidth: 100
+                        iconColor: "#00A010"
+                        //anchors.fill: parent
+                        Layout.fillWidth: true
+                        Layout.minimumHeight: 20
+                        Layout.preferredHeight: parent.height
+
+                        //clip: true
+                    }
                 }
             }
         }

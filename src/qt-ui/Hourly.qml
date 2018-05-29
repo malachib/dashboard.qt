@@ -3,21 +3,21 @@ import QtQuick.Layouts 1.1
 
 ListView {
     id: root
-    anchors.fill: parent
     orientation: ListView.Horizontal
     layoutDirection: Qt.LeftToRight
     property color iconColor: "blue"
     property real iconSize: 60
+    property bool showSummary: true
+    property int itemWidth: 150
 
     delegate: Rectangle
     {
         color: 'transparent'
-        width: 150
+        width: itemWidth
         height: parent.height
         //anchors.margins: 10
         border.color: '#002000'
         border.width: 0.5
-        opacity: 0.8
 
         Row {
             //anchors.bottom: parent.bottom
@@ -27,6 +27,7 @@ ListView {
             Item {
                 width: text_summary.width
                 height: text_summary.height
+                visible: showSummary
 
                 anchors.bottom: parent.bottom
                 anchors.margins: 10
@@ -45,7 +46,7 @@ ListView {
 
                 Text {
                     color: "white"
-                    text: "    " + temperature + "\xB0 F"
+                    text: temperature + "\xB0 F"
                 }
 
                 Text {
