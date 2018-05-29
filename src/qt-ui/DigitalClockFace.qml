@@ -4,7 +4,7 @@ import "file.js" as JS // polyfill for padStart() // TODO: rename it
 
 Rectangle {
     id: root
-    color: 'transparent'
+    //color: 'transparent'
 
     property int hours
     property int minutes
@@ -21,12 +21,22 @@ Rectangle {
 
     Row {
         Text {
+            font.family: clockFont.name
+            font.pointSize: pointsize
+            color: 'black'
+            text: '.00:00'
+        }
+    }
+
+    Row {
+        // Zeee dot
+        Text {
             id: ampm
-            text: hours >= 12 ? '.' : ''
+            text: '.'
             font.family: clockFont.name
             font.pointSize: pointsize
             visible: !is_24_hour
-            color: root.color
+            color: hours >= 12 ? root.color : "transparent"
         }
 
         Text {
@@ -36,11 +46,9 @@ Rectangle {
                 if(!is_24_hour && __hours > 12)
                     __hours -= 12;
 
-                return __hours;
-                /* TBD: figure out when we really do and don't want to pad
                 var s = "" + __hours;
 
-                return s.padStart(2); */
+                return s.padStart(2);
             }
             font.family: clockFont.name
             font.pointSize: pointsize
