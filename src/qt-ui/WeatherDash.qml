@@ -27,6 +27,13 @@ Rectangle {
         onGeocodeUpdated: darksky.refresh(loc.latitude, loc.longitude);
     }
 
+    Timer {
+        interval: 1000 * 60 * 60 // once every hour
+        running: true
+        onTriggered: darksky.refresh(geocoder.loc.latitude, geocoder.loc.longitude)
+    }
+
+
     Weather {
         id: darksky
     }
@@ -105,6 +112,13 @@ Rectangle {
         }
 
         Column {
+            transform: Scale {
+                origin.x: 0
+                origin.y: 0
+                xScale: 1.5
+                yScale: 1.5
+            }
+
             Text { color: "white"; text: darksky.currently.temperature + "\xB0 F" }
             Text { color: "white"; text: darksky.currently.summary }
             Text { color: "white"; text: geocoder.name }
