@@ -57,6 +57,8 @@ view.setColor(QColor(0, 30, 0))
 
 view.show()
 
+is_full_screen = False
+
 # technique lifted from https://stackoverflow.com/questions/19131084/pyqt5-qml-signal-to-python-slot
 # and augmented from https://stackoverflow.com/questions/30586983/how-to-close-pyqt5-program-from-qml
 # could refine with https://stackoverflow.com/questions/24111717/how-to-bind-buttons-in-qt-quick-to-python-pyqt-5
@@ -64,8 +66,17 @@ view.show()
 def on_quit():
     app.quit()
 
+def on_toggle_fullscreen():
+    global is_full_screen
+    if is_full_screen:
+        view.show()
+    else:
+        view.showFullScreen()
+    is_full_screen = not is_full_screen
+
 weather_dash = view.rootObject()
 weather_dash.quit.connect(on_quit)
+weather_dash.toggleFullScreen.connect(on_toggle_fullscreen)
 
 # this does work
 #view.showFullScreen()

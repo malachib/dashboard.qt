@@ -18,6 +18,18 @@ Rectangle {
     color: 'transparent'
     id: root
 
+    signal toggleFullScreen()
+
+    // focus: true needed for keys.onPressed.  Hopefully it doesnt mess anything up
+    focus: true
+    Keys.onPressed: {
+        switch(event.key)
+        {
+            case Qt.Key_F11:
+                toggleFullScreen()
+        }
+    }
+
     TabbedRect {
         anchors.fill: parent
     }
