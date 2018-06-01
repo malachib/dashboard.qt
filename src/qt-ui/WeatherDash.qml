@@ -1,6 +1,6 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.1
+import QtQuick.Controls 2.0
 
 import QtLocation 5.3
 import QtPositioning 5.0
