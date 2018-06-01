@@ -6,7 +6,9 @@
 import forecastio
 
 from PyQt5.QtCore import pyqtProperty, pyqtSignal, pyqtSlot, QObject, QUrl, QThreadPool, QRunnable, QDateTime
+from PyQt5.QtCore import QAbstractListModel, QModelIndex
 from PyQt5.QtQml import QQmlListProperty
+
 from datetime import date, datetime
 
 api_key = ""
@@ -97,6 +99,29 @@ class CurrentlyDataPoint(DataPoint):
     @pyqtProperty(float, constant=True)
     def nearestStormDistance(self):
         return self._datapoint.nearestStormDistance
+
+# lifting from https://www.saltycrane.com/blog/2008/01/pyqt-43-simple-qabstractlistmodel/
+# arranged hopefully so that Charts and their specific model requirements are met
+# this also seems pertinent
+# https://stackoverflow.com/questions/17800897/how-to-retrieve-data-from-a-qabstractlistmodel-using-pyqt
+class DataBlockModel(QAbstractListModel):
+
+    def __init__(self, datablock, parent=None, *args):
+        """ remember, datablock.data is where the magic list is
+            also, we're expecting the native darksky datablock here, not the 'DataBlock' below
+        """
+        super().__init__(parent, *args)
+        self._datablock = datablock
+
+    def rowCount(self, parent=QModelIndex()):
+        return len(self._datablock.data)
+
+    def data(self, index, role):
+        if index.isValid() and role == Qt.DisplayRole:
+            return QVariant(self._datablock.data[index.row()])
+        else:
+            return QVariant()
+
 
 
 class DataBlock(QObject):
