@@ -16,6 +16,7 @@ import WeatherCategory 1.0
 Rectangle {
     anchors.fill: parent
     color: 'transparent'
+    id: root
 
     TabbedRect {
         anchors.fill: parent
@@ -279,6 +280,9 @@ Rectangle {
 
     }
 
+    // to link back to python code
+    signal quit()
+
     Button {
         anchors.right: last_updated.left
         anchors.bottom: parent.bottom
@@ -289,9 +293,11 @@ Rectangle {
         onClicked: {
             // TODO: Once I figure how to do a popup or something similar, set up a config area
             var c = Qt.createComponent("qml/config/Geocode.qml")
+
             //var window = c.createObject(c)
 
             //window.show()
+            root.quit()
         }
     }
 }

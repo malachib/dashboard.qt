@@ -20,7 +20,12 @@ init_subsystem()
 #raw_test3()
 
 app = QApplication(sys.argv)
+engine = QQmlEngine(app)
 #engine = QQmlApplicationEngine()
+
+# doesn't quite work because we aren't actually using the component associated
+# with this engine
+engine.quit.connect(app.quit)
 
 # from http://pyqt.sourceforge.net/Docs/PyQt5/qml.html
 # Register the Python type.  Its URI is 'People', it's v1.0 and the type
@@ -30,8 +35,16 @@ qmlRegisterType(DataPoint, 'WeatherCategory', 1, 0, 'DataPoint')
 qmlRegisterType(DataBlock, 'WeatherCategory', 1, 0, 'DataBlock')
 qmlRegisterType(Geocoder, 'WeatherCategory', 1, 0, 'Geocoder')
 
-# Create the QML user interface.
+component = QQmlComponent(engine)
+component.loadUrl(QUrl('WeatherDash.qml'))
+
+# Create the QML user interface.  Auto creates its own engine
 view = QQuickView()
+
+engine2 = view.engine
+# Does not run
+#engine2.quit.connect(app.quit)
+
 #view.setSource(QUrl('PyTest.qml'))
 # To Satisfy cool-retro-term needs
 view.rootContext().setContextProperty('devicePixelRatio', app.devicePixelRatio())
@@ -43,5 +56,18 @@ view.setGeometry(100, 100, 750, 480)
 view.setColor(QColor(0, 30, 0))
 
 view.show()
+
+# technique lifted from https://stackoverflow.com/questions/19131084/pyqt5-qml-signal-to-python-slot
+# and augmented from https://stackoverflow.com/questions/30586983/how-to-close-pyqt5-program-from-qml
+# could refine with https://stackoverflow.com/questions/24111717/how-to-bind-buttons-in-qt-quick-to-python-pyqt-5
+# not 100% ideal, but adequate and interesting
+def on_quit():
+    app.quit()
+
+weather_dash = view.rootObject()
+weather_dash.quit.connect(on_quit)
+
+# this does work
+#view.showFullScreen()
 
 app.exec_()
