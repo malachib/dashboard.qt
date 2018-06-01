@@ -177,11 +177,13 @@ Rectangle {
     }
 
     Row {
-        y: 130
+        y: 100
         x: 200
 
         WeatherChart {
-
+            width: 400
+            height: 100
+            model: darksky.hourly.data
         }
 
         Text {
