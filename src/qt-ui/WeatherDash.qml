@@ -176,6 +176,20 @@ Rectangle {
         }
     }
 
+    Row {
+        y: 130
+        x: 200
+
+        WeatherChart {
+
+        }
+
+        Text {
+            color: 'white'
+            text: 'here I am'
+        }
+    }
+
     TabbedRect {
         color: 'transparent'
         anchors.right: parent.right

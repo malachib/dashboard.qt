@@ -32,3 +32,9 @@ I think also
 For pyqt, regular pip install won't do.  Use:
 
 `sudo apt-get install pyqt5-dev pyqt5-dev-tools`
+
+## macOS
+
+Do `pip3 install pyqt5`
+
+Also experimenting with `pip3 install PyQtChart`
