@@ -180,6 +180,15 @@ Rectangle {
         y: 100
         x: 200
 
+        Loader {
+            width: 400
+            height: 100
+            id: weatherChart
+            objectName: "WeatherChart"
+            //source: 'WeatherChart.qml'
+        }
+
+        /*
         WeatherChart {
             width: 400
             height: 100
@@ -189,7 +198,7 @@ Rectangle {
         Text {
             color: 'white'
             text: 'here I am'
-        }
+        } */
     }
 
     TabbedRect {

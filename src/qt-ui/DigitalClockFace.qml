@@ -43,8 +43,13 @@ Rectangle {
             id: _hours
             text: {
                 var __hours = hours
-                if(!is_24_hour && __hours > 12)
-                    __hours -= 12;
+                if(!is_24_hour)
+                {
+                    if(__hours > 12)
+                        __hours -= 12;
+                    else if(__hours == 0)
+                        __hours = 12;
+                }
 
                 var s = "" + __hours;
 

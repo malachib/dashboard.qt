@@ -78,6 +78,10 @@ weather_dash = view.rootObject()
 weather_dash.quit.connect(on_quit)
 weather_dash.toggleFullScreen.connect(on_toggle_fullscreen)
 
+# may want to do this slightly differently, though I prefer QML doing the heavy lifting
+# http://doc.qt.io/qt-5/qqmlcomponent.html
+#weather_chart = view.findChild(Loader, "WeatherChart")
+
 # this does work
 #view.showFullScreen()
 

@@ -27,6 +27,8 @@ I think also
 
 `sudo apt-get install qml-module-qtquick-templates2`
 
+At present, https://packages.debian.org/buster/libs/qml-module-qtcharts indicates we can't easily insdtall qtcharts yet
+
 ## Raspbian
 
 For pyqt, regular pip install won't do.  Use:
