@@ -11,6 +11,9 @@ ListView {
     property bool showSummary: true
     property int itemWidth: 110
 
+    highlightMoveDuration: 6000
+    highlightMoveVelocity: 15
+
     delegate: Rectangle
     {
         color: 'transparent'

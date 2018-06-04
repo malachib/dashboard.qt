@@ -7,6 +7,7 @@ Rectangle
     property int indent: 30
     property bool upperLeftIndent: true
     property bool upperRightIndent: false
+    //property bool filled: false
 
     // lifted from https://forum.qt.io/topic/63664/how-to-draw-a-polygon-with-qml/7
     Canvas {

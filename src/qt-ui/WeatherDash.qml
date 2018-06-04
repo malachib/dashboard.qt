@@ -230,13 +230,22 @@ Rectangle {
         }
 
         Timer {
-            interval: 5000
+            interval: 6000
             repeat: true
             running: true
             onTriggered: {
-                if(hourly.currentIndex == hourly.count - 1)
+                if(hourly.currentIndex === hourly.count - 1)
+                {
+                    console.log('got here')
+                    stop();
+                    var v = hourly.highlightMoveVelocity;
+                    hourly.highlightMoveVelocity = 150;
                     hourly.currentIndex = 0
-                hourly.incrementCurrentIndex()
+                    hourly.highlightMoveVelocity = v;
+                    start();
+                }
+                else
+                    hourly.incrementCurrentIndex()
             }
         }
     }

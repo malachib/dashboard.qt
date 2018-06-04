@@ -10,6 +10,7 @@ from PyQt5.QtCore import QAbstractListModel, QModelIndex
 from PyQt5.QtQml import QQmlListProperty
 
 from datetime import date, datetime
+from itertools import islice
 
 api_key = ""
 
@@ -127,10 +128,17 @@ class DataBlockModel(QAbstractListModel):
 
 class DataBlock(QObject):
 
-    def __init__(self, datablock, DataPointType, parent=None):
+    def __init__(self, datablock, DataPointType, maxCount=None, parent=None):
         super().__init__(parent)
 
         self._transformed = [DataPointType(v) for v in datablock.data]
+
+        # as per https://stackoverflow.com/questions/42393527/how-to-limit-the-size-of-a-comprehension?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+        # we can limit count this way, and slice is pretty cool (reminds me of new .NET Span/Slice stuff,
+        # probably inspired by this python one)
+        if maxCount != None:
+            self._transformed = list(islice(self._transformed, maxCount))
+
         self._datablock = datablock
         self._data = QQmlListProperty(DataPoint, self, self._transformed)
 
