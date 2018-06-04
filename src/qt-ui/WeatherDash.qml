@@ -207,7 +207,7 @@ Rectangle {
         anchors.margins: 10
         anchors.left: parent.left
         y: 190
-        height: 170
+        height: 130
         id: hourly_tabrect
 
         Hourly {
@@ -302,7 +302,7 @@ Rectangle {
                         showSummary: false
                         model: darksky_aux.hourly.data
                         iconSize: 30
-                        itemWidth: 100
+                        itemWidth: 90
                         iconColor: "#00A010"
                         //anchors.fill: parent
                         Layout.fillWidth: true

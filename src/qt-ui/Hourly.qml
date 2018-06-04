@@ -9,7 +9,7 @@ ListView {
     property color iconColor: "blue"
     property real iconSize: 60
     property bool showSummary: true
-    property int itemWidth: 150
+    property int itemWidth: 110
 
     delegate: Rectangle
     {
@@ -32,7 +32,9 @@ ListView {
                 color: 'green'
             } */
 
+            // summary, rotated
             Item {
+                id: text_summary_item
                 //anchors.bottom: parent.bottom
 
                 //width:text_summary_rect.height
@@ -40,6 +42,12 @@ ListView {
                 width: text_summary.height
                 height: parent.height
                 visible: showSummary
+
+                TabbedRect {
+                    anchors.fill: parent
+                    opacity: 0.5
+                    indent: parent.width
+                }
 
                 Rectangle {
                     id: text_summary_rect
@@ -64,13 +72,7 @@ ListView {
                     anchors.bottom: parent.bottom
 
                     Text {
-                        //transformOrigin: Item.TopLeft
-
                         id: text_summary
-                        //width: 30
-                        //anchors.bottom: parent.bottom
-                        //horizontalAlignment: Text.AlignHCenter
-                        //rotation: -90
                         color: "white"
                         text: summary
                     }
@@ -79,19 +81,14 @@ ListView {
 
             Column {
                 id: detail
-
-                /*
-                Text {
-                    color: "white"
-                    text: "Precip: " + precipIntensity
-                } */
+                anchors.bottom: parent.bottom
 
                 Row {
 
                     Column {
                         Text {
                             color: "white"
-                            text: temperature.toFixed(1) + "\xB0 F"
+                            text: temperature.toFixed(1) + "\xB0 F  "
                         }
 
                         DarkSkyIcon {
@@ -102,20 +99,34 @@ ListView {
                         }
                     }
 
-                    LinearGradient {
-                        //anchors.fill: parent
+                    Item {
                         width: 10
                         anchors.bottom: parent.bottom
-                        height: {
-                            var ceiling = 7.5; // 7.5 represents entry into 'heavy rain' category, and where we top
-                            var h = Math.min(ceiling, precipIntensity) * parent.height / ceiling;
-                            return h;
+                        height: parent.height
+
+                        TabbedRect {
+                            anchors.fill: parent
+                            indent: 10
+                            upperLeftIndent: false
+                            upperRightIndent: true
+                            opacity: 0.2
                         }
-                        start: Qt.point(0, height - parent.height)
-                        end: Qt.point(0, height)
-                        gradient: Gradient {
-                            GradientStop { position: 0.0; color: "blue" }
-                            GradientStop { position: 1.0; color: "white" }
+
+                        // precip semi-chart
+                        LinearGradient {
+                            width: parent.width
+                            height: {
+                                //var precipIntensity = 7.5; // synthetic test value
+                                var ceiling = 7.5; // 7.5 represents entry into 'heavy rain' category, and where we top
+                                var h = Math.min(ceiling, precipIntensity) * parent.height / ceiling;
+                                return h;
+                            }
+                            start: Qt.point(0, height - parent.height)
+                            end: Qt.point(0, height)
+                            gradient: Gradient {
+                                GradientStop { position: 0.0; color: "blue" }
+                                GradientStop { position: 1.0; color: "white" }
+                            }
                         }
                     }
 
@@ -125,11 +136,24 @@ ListView {
                 Text {
                     id: _time
                     color: "white"
-                    text: Qt.formatDateTime(time, "ddd h:mm ap")
+                    text:
+                    {
+                        // TODO: Add a version which shows +1, +2 etc. for days ahead of where we are
+                        return Qt.formatDateTime(time, "ddd h:mm ap").toLowerCase();
+                    }
                 }
             }
 
             spacing: 1
+        }
+
+        // asthetic top line
+        Rectangle {
+            width: itemWidth - 30
+            x: 15 + (showSummary ? text_summary_item.width : 0)
+            height: 2
+            border.color: '#002000'
+            y: detail.y / 2
         }
     }
 }
