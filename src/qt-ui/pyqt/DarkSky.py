@@ -64,6 +64,7 @@ class DataPoint(QObject):
         else:
             return -1
 
+    # mm per hour
     @pyqtProperty(float, constant=True)
     def precipIntensity(self):
         return self._datapoint.precipIntensity
