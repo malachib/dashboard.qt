@@ -5,6 +5,8 @@ import QtQuick.Controls 2.0
 import QtLocation 5.3
 import QtPositioning 5.0
 
+import QtGraphicalEffects 1.0
+
 import "qml/shader"
 
 //import "qml/config"
@@ -201,54 +203,105 @@ Rectangle {
         } */
     }
 
-    TabbedRect {
-        color: 'transparent'
+    // where we draw the main hourly thingy
+    Item {
+        id: _hourly_tabrect
         anchors.right: parent.right
         anchors.margins: 10
         anchors.left: parent.left
         y: 190
         height: 130
-        id: hourly_tabrect
 
-        Hourly {
-            id: hourly
-            anchors.margins: 10
+        OpacityMask {
+            source: _hourly
+            maskSource: hourly_mask
             anchors.fill: parent
-            model: darksky.hourly.data
-            iconColor: "#00A010"
-            clip: true
-            opacity: 0.8
         }
 
-        MouseArea {
+        TabbedRect {
+            id: hourly_mask
+            visible: false
             anchors.fill: parent
-            onClicked: {
-                hourly.incrementCurrentIndex();
-                //geocodeModel.update()
-                //console.log("Geocodemodel online: " + aPlugin.supportsGeocoding(Plugin.AnyGeocodingFeatures))
+            color: 'transparent' // mask only the inside
+            fill: 'blue'
+        }
+
+        TabbedRect {
+            anchors.fill: parent
+            id: hourly_tabrect
+            visible: true
+        }
+
+
+        ZoomBlur {
+            scale: 0.9
+            anchors.fill: parent
+            source: _hourly
+            id: __hourly
+            length: 9
+            opacity: 0.2
+            samples: 16
+            transparentBorder: true
+        }
+
+        ZoomBlur {
+            scale: 0.8
+            anchors.fill: parent
+            source: __hourly
+            id: ___hourly
+            length: 9
+            opacity: 0.05
+            samples: 16
+            transparentBorder: true
+        }
+
+        Item {
+            anchors.fill: parent
+            id: _hourly
+            visible: false
+
+            Hourly {
+                id: hourly
+                anchors.margins: 10
+                anchors.fill: parent
+                model: darksky.hourly.data
+                iconColor: "#00A010"
+                clip: true
+                opacity: 0.8
             }
-        }
 
-        Timer {
-            interval: 6000
-            repeat: true
-            running: true
-            onTriggered: {
-                if(hourly.currentIndex === hourly.count - 1)
-                {
-                    console.log('got here')
-                    stop();
-                    var v = hourly.highlightMoveVelocity;
-                    hourly.highlightMoveVelocity = 150;
-                    hourly.currentIndex = 0
-                    hourly.highlightMoveVelocity = v;
-                    start();
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    hourly.incrementCurrentIndex();
+                    //geocodeModel.update()
+                    //console.log("Geocodemodel online: " + aPlugin.supportsGeocoding(Plugin.AnyGeocodingFeatures))
                 }
-                else
-                    hourly.incrementCurrentIndex()
+            }
+
+            Timer {
+                interval: 6000
+                repeat: true
+                running: true
+                onTriggered: {
+                    if(hourly.currentIndex === hourly.count - 1)
+                    {
+                        console.log('got here')
+                        stop();
+                        var v = hourly.highlightMoveVelocity;
+                        hourly.highlightMoveVelocity = 150;
+                        hourly.currentIndex = 0
+                        hourly.highlightMoveVelocity = v;
+                        start();
+                    }
+                    else
+                        hourly.incrementCurrentIndex()
+                }
             }
         }
     }
+
+
 
 
     ListModel {
@@ -261,7 +314,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.margins: 10
         anchors.left: parent.left
-        anchors.top: hourly_tabrect.bottom
+        anchors.top: _hourly_tabrect.bottom
         anchors.bottom: parent.bottom
 
         ListView {

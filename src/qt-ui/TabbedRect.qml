@@ -1,13 +1,16 @@
 import QtQuick 2.0
 
-Rectangle
+Item
 {
     //color: 'yellow'
-    color: 'transparent'
+    //color: 'transparent'
     property int indent: 30
     property bool upperLeftIndent: true
     property bool upperRightIndent: false
     //property bool filled: false
+
+    property color fill: '#30002000'
+    property color color: '#009b00'
 
     // lifted from https://forum.qt.io/topic/63664/how-to-draw-a-polygon-with-qml/7
     Canvas {
@@ -20,10 +23,13 @@ Rectangle
             //var indent = 30;
             // setup the stroke
             ctx.lineWidth = 1
-            ctx.strokeStyle = "#009b00"
+            ctx.strokeStyle = color
             // setup the fill (transparent)
             // https://forum.qt.io/topic/51084/canvas-2d-fill-color-by-rgba-string/2
-            ctx.fillStyle = "rgba(0, 20, 0, 0.3)"
+            //ctx.fillStyle = "rgba(0, 20, 0, 0.3)"
+
+            ctx.fillStyle = fill;
+
             // begin a new path to draw
             ctx.beginPath()
             if(upperLeftIndent)
