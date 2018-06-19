@@ -9,6 +9,7 @@ import QtPositioning 5.0
 import QtGraphicalEffects 1.0
 
 import "qml/shader"
+import "."
 
 //import "qml/config"
 
