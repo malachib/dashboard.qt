@@ -2,17 +2,29 @@ import QtQuick 2.3
 import QtGraphicalEffects 1.0
 
 Rectangle {
+    id: root
     color: 'transparent'
     property color iconColor: "blue"
+    property real scale_exp: 1
+
+    //. ensure that scale happens around icon center
+    transform: Translate {
+        x: (width - (width * scale_exp)) / 2
+        y: (height - (height * scale_exp)) / 2
+    }
+
 
     Image {
         // presample at a reasonably high res
+        // FIX: Don't assume a square icon
         sourceSize.width: 1024
         sourceSize.height: 1024
 
         fillMode: Image.PreserveAspectCrop
 
-        anchors.fill: parent
+        //anchors.fill: parent
+        width: parent.width * scale_exp
+        height: parent.height * scale_exp
 
         mipmap: true
         id: image

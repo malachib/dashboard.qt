@@ -75,6 +75,7 @@
         <file>qml/config/Geocode.qml</file>
         <file>DigitalClockFace.qml</file>
         <file>WeatherChart.qml</file>
+        <file>Style.qml</file>
     </qresource>
     <qresource prefix="/qml/shader">
         <file>qml/shader/ShaderTerminal.qml</file>

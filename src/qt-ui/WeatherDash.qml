@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 2.0
+import QtQuick.Window 2.2
 
 import QtLocation 5.3
 import QtPositioning 5.0
@@ -22,6 +23,10 @@ Rectangle {
     property string primary_location: "Alhambra, CA"
 
     signal toggleFullScreen()
+
+    FontLoader {
+        id: fontRez; source: "fonts/REZ.ttf"
+    }
 
     // focus: true needed for keys.onPressed.  Hopefully it doesnt mess anything up
     focus: true
@@ -134,7 +139,7 @@ Rectangle {
             width: 250
             height: 250
             state: darksky.currently.icon
-            iconColor: "blue"
+            iconColor: Style.iconColor
             id: icon
         }
 
@@ -151,8 +156,28 @@ Rectangle {
             ]
 
             Text { color: "white"; text: darksky.currently.temperature + "\xB0 F" }
-            Text { color: "white"; text: darksky.currently.summary }
-            Text { color: "white"; text: geocoder.name }
+
+            Text
+            {
+                color: "white"; text: geocoder.name
+            }
+
+            Rectangle {
+                color: Style.iconColor
+                opacity: 0.3
+                width: 1
+                height: 20
+            }
+
+            Text
+            {
+                font.pointSize: 30
+                font.family: fontRez.name
+                color: "white";
+                //color: Style.iconColor
+                opacity: 0.8
+                text: darksky.currently.summary
+            }
         }
 
         // FIX: ugly space buffer but it will do
@@ -282,7 +307,7 @@ Rectangle {
                 anchors.margins: 10
                 anchors.fill: parent
                 model: darksky.hourly.data
-                iconColor: "#00A010"
+                iconColor: Style.iconColor
                 clip: true
                 opacity: 0.9
             }

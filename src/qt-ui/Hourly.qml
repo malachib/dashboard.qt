@@ -9,10 +9,16 @@ ListView {
     property color iconColor: "blue"
     property real iconSize: 60
     property bool showSummary: true
-    property int itemWidth: 110
+    property int itemWidth: 130
+    // doesn't do justification/alignment nicely, so probably phase this out
+    property real scale_exp: 1
 
     highlightMoveDuration: 6000
     highlightMoveVelocity: 15
+
+    FontLoader {
+        id: _font; source: "fonts/REZ.ttf"
+    }
 
     delegate: Rectangle
     {
@@ -90,13 +96,24 @@ ListView {
 
                     Column {
                         Text {
+                            color: root.iconColor;
+                            font.pointSize: 15
+                            font.family: _font.name
+                            opacity: 0.5
+                            text: Qt.formatDateTime(time, "ddd").toLowerCase();
+                            scale: scale_exp
+                        }
+
+                        Text {
                             color: "white"
                             text: temperature.toFixed(1) + "\xB0 F  "
+                            scale: scale_exp
                         }
 
                         DarkSkyIcon {
                             width: iconSize
                             height: iconSize
+                            scale_exp: 1.5
                             state: icon
                             iconColor: root.iconColor
                         }
@@ -142,8 +159,9 @@ ListView {
                     text:
                     {
                         // TODO: Add a version which shows +1, +2 etc. for days ahead of where we are
-                        return Qt.formatDateTime(time, "ddd h:mm ap").toLowerCase();
+                        return Qt.formatDateTime(time, "h:mm ap").toLowerCase();
                     }
+                    scale: scale_exp
                 }
             }
 
