@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.3
 import QtGraphicalEffects 1.0
 
 Rectangle {
@@ -11,6 +11,9 @@ Rectangle {
 
         fillMode: Image.PreserveAspectCrop
 
+        anchors.fill: parent
+
+        mipmap: true
         id: image
         visible: false // going through a transform pipeline so don't render here
     }
@@ -75,9 +78,10 @@ Rectangle {
         anchors.fill: image
         source: image
         color: iconColor
-        visible: false
+        visible: true
     }
 
+    /*
     // now resize it with the mipmap smoothing
     // https://stackoverflow.com/questions/23286666/qml-image-smooth-property-not-working
     ShaderEffectSource {
@@ -93,5 +97,5 @@ Rectangle {
 
         scale: 1.3
         property var source: src
-    }
+    } */
 }
