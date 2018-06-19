@@ -21,7 +21,7 @@ Since this is a python3.x project, pip3 is recommended
 
 Modules needed:
 
-`sudo apt-get install qt5-default qml-module-qtquick-controls2 qml-module-qtlocation qml-module-qtpositioning`
+`sudo apt-get install qt5-default qml-module-qtquick-controls qml-module-qtquick-controls2 qml-module-qtlocation qml-module-qtpositioning`
 
 I think also
 
@@ -33,7 +33,7 @@ At present, https://packages.debian.org/buster/libs/qml-module-qtcharts indicate
 
 For pyqt, regular pip install won't do.  Use:
 
-`sudo apt-get install pyqt5-dev pyqt5-dev-tools`
+`sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5.qtquick`
 
 ## macOS
 
