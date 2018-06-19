@@ -19,6 +19,7 @@ Rectangle {
     anchors.fill: parent
     color: 'transparent'
     id: root
+    property string primary_location: "Alhambra, CA"
 
     signal toggleFullScreen()
 
@@ -29,6 +30,9 @@ Rectangle {
         {
             case Qt.Key_F11:
                 toggleFullScreen()
+
+            case Qt.Key_Q:
+                quit();
         }
     }
 
@@ -38,7 +42,7 @@ Rectangle {
 
     Geocoder {
         id: geocoder
-        name: "Alhambra, CA"
+        name: primary_location
         onGeocodeUpdated: darksky.refresh(loc.latitude, loc.longitude);
     }
 
@@ -120,19 +124,31 @@ Rectangle {
         id: current_disp
 
         DarkSkyIcon {
-            width: 200
-            height: 200
+            // just to make top left hang off the edge a bit, since most icons are whitespace in that
+            // area
+            transform: Translate {
+                x: -30
+                y: -30
+            }
+
+            width: 250
+            height: 250
             state: darksky.currently.icon
             iconColor: "blue"
+            id: icon
         }
 
         Column {
-            transform: Scale {
-                origin.x: 0
-                origin.y: 0
-                xScale: 1.5
-                yScale: 1.5
-            }
+            transform: [
+                Translate {
+                    x: -20
+                },
+
+                Scale {
+                    xScale: 2
+                    yScale: 2
+                }
+            ]
 
             Text { color: "white"; text: darksky.currently.temperature + "\xB0 F" }
             Text { color: "white"; text: darksky.currently.summary }
@@ -218,6 +234,7 @@ Rectangle {
             anchors.fill: parent
         }
 
+        // do this to clip the corners
         TabbedRect {
             id: hourly_mask
             visible: false
@@ -267,7 +284,7 @@ Rectangle {
                 model: darksky.hourly.data
                 iconColor: "#00A010"
                 clip: true
-                opacity: 0.8
+                opacity: 0.9
             }
 
             MouseArea {

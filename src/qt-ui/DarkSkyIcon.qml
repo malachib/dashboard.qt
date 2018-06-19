@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.0
 Rectangle {
     color: 'transparent'
     property color iconColor: "blue"
+
     Image {
         // presample at a reasonably high res
         sourceSize.width: 1024
