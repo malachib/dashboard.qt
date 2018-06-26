@@ -30,8 +30,8 @@ try:
 
     GPIO.setmode(GPIO.BOARD)
     # bouncetime is in milliseconds
-    GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN, bouncetime=250)
-    GPIO.add_event_detect(channel, GPIO.BOTH, callback=pir_activity)
+    GPIO.setup(channel, GPIO.IN)
+    GPIO.add_event_detect(channel, GPIO.BOTH, callback=pir_activity, bouncetime=250)
 
 except ImportError:
 	print('not attempting GPIO/screen blank')
