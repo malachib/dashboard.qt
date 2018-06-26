@@ -30,9 +30,9 @@ try:
 
     GPIO.setmode(GPIO.BOARD)
     # bouncetime is in milliseconds
-    # the fact that adding a pulldown makes this much of a difference
-    # does suggest weak wiring
-    GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    # internet sources generally consider this part to be 'open collector' which
+    # needs a pullup.  Some say the pullup is built-in, however
+    GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(channel, GPIO.BOTH, callback=pir_activity, bouncetime=250)
 
 except ImportError:
