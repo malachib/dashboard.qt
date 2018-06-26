@@ -13,6 +13,8 @@ from PyQt5.QtQml import qmlRegisterType, QQmlComponent, QQmlEngine
 from pyqt.WeatherObject import *
 from pyqt.Geocoder import Geocoder
 
+import pyqt.HDMI
+
 #geocode_test1()
 
 init_subsystem()
