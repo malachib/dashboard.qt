@@ -29,7 +29,8 @@ try:
 
 
     GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(channel, GPIO.IN)
+    # bouncetime is in milliseconds
+    GPIO.setup(channel, GPIO.IN, pull_up_down=GPIO.PUD_DOWN, bouncetime=250)
     GPIO.add_event_detect(channel, GPIO.BOTH, callback=pir_activity)
 
 except ImportError:
