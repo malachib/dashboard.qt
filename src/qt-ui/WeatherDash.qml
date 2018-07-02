@@ -186,7 +186,7 @@ Rectangle {
         Rectangle {
             id: spacer
             color: 'transparent'
-            width: 100
+            width: 200
             height: 1
         }
 
@@ -217,7 +217,7 @@ Rectangle {
             is_24_hour: false
             anchors.left: spacer.right
             color: '#30C030'
-            pointsize: 80
+            pointsize: 120
         }
     }
 
