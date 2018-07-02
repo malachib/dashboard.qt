@@ -49,7 +49,7 @@ class Weather(QObject):
 
     # blocking call, call this via threadpool/worker
     def blocking_refresh(self, lat, lng):
-        #print("refreshing forecast: ", lat, ", ", lng)
+        print("refreshing forecast: ", lat, ", ", lng)
         self._forecast = forecastio.load_forecast(api_key, lat, lng, units=self._units)
         self._datapoint = DataPoint(self._forecast.currently())
         self.forecastUpdated.emit(self._datapoint)

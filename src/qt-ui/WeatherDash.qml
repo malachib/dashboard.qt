@@ -55,6 +55,7 @@ Rectangle {
     Timer {
         interval: 1000 * 60 * 60 // once every hour
         running: true
+        repeat: true
         onTriggered: darksky.refresh(geocoder.loc.latitude, geocoder.loc.longitude)
     }
 
@@ -133,12 +134,12 @@ Rectangle {
             // just to make top left hang off the edge a bit, since most icons are whitespace in that
             // area
             transform: Translate {
-                x: -30
-                y: -30
+                x: -50
+                y: -50
             }
 
-            width: 250
-            height: 250
+            width: 300
+            height: 300
             state: darksky.currently.icon
             iconColor: Style.iconColor
             id: icon
@@ -151,8 +152,8 @@ Rectangle {
                 },
 
                 Scale {
-                    xScale: 2
-                    yScale: 2
+                    xScale: 2.2
+                    yScale: 2.2
                 }
             ]
 
@@ -251,8 +252,8 @@ Rectangle {
         anchors.right: parent.right
         anchors.margins: 10
         anchors.left: parent.left
-        y: 190
-        height: 130
+        y: 220
+        height: 180
 
         OpacityMask {
             source: _hourly
@@ -309,6 +310,10 @@ Rectangle {
                 anchors.fill: parent
                 model: darksky.hourly.data
                 iconColor: Style.iconColor
+
+                itemWidth: 160
+                iconSize: 110
+
                 clip: true
                 opacity: 0.9
             }
@@ -367,7 +372,7 @@ Rectangle {
 
             // per-hourly-batch item
             delegate: Item {
-                height: 75
+                height: 100
                 width: parent.width
 
                 Geocoder {
@@ -406,8 +411,8 @@ Rectangle {
                     Hourly {
                         showSummary: false
                         model: darksky_aux.hourly.data
-                        iconSize: 30
-                        itemWidth: 90
+                        iconSize: 40
+                        itemWidth: 120
                         iconColor: "#00A010"
                         //anchors.fill: parent
                         Layout.fillWidth: true
