@@ -25,6 +25,9 @@ from PyQt5.QtPositioning import QGeoCoordinate
 import forecastio
 import geocoder
 
+from requests.exceptions import ConnectionError
+from urllib3.exceptions import NewConnectionError, MaxRetryError
+
 from pyqt.DarkSky import *
 from pyqt.Threading import Worker, threadpool
 from pyqt.Geocoder import *
@@ -54,7 +57,7 @@ class Weather(QObject):
             self._forecast = forecastio.load_forecast(api_key, lat, lng, units=self._units)
             self._datapoint = DataPoint(self._forecast.currently())
             self.forecastUpdated.emit(self._datapoint)
-        except (MaxRetryError, ConnectionError):
+        except (NewConnectionError, MaxRetryError, ConnectionError):
             print("Network error, couldn't refresh forecast")
 
     def __init__(self, parent=None):
