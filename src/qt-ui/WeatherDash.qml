@@ -302,7 +302,9 @@ Rectangle {
         Item {
             anchors.fill: parent
             id: _hourly
-            visible: false
+            // NOTE: This was set to false for some reason.  Diagnostics?  on debian-dev, it clearly
+            // looks proper with this = true
+            visible: true
 
             Hourly {
                 id: hourly
@@ -394,7 +396,9 @@ Rectangle {
                         Layout.minimumHeight: 20
                         Layout.maximumHeight: parent.height
                         //Layout.fillWidth: true
-                        anchors.bottom: parent.bottom
+                        //anchors.bottom: parent.bottom
+                        // FIX: Don't think this AlignBottom is a good substitute for the above anchors
+                        Layout.alignment: Qt.AlignBottom
 
                         Text {
                             id: text_summary

@@ -129,7 +129,7 @@ ListView {
                             indent: 10
                             upperLeftIndent: false
                             upperRightIndent: true
-                            opacity: 0.2
+                            opacity: 0.15
                         }
 
                         // precip semi-chart
