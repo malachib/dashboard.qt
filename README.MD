@@ -29,11 +29,13 @@ I think also
 
 At present, https://packages.debian.org/buster/libs/qml-module-qtcharts indicates we can't easily insdtall qtcharts yet
 
-## Raspbian
+### Raspbian
 
-For pyqt, regular pip install won't do.  Use:
+For pyqt, regular pip install won't do.  In addition to regular debian `apt-get` above, use:
 
 `sudo apt-get install pyqt5-dev pyqt5-dev-tools python3-pyqt5.qtquick`
+
+See https://gist.github.com/malachib/0477b4280bfad85130d42f8f60ef38cd 
 
 ## macOS
 

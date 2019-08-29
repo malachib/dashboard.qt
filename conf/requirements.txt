@@ -1,4 +1,5 @@
-pytz
-python-forecastio
-pyqt5
-geocoder
+pyqt5==5.13.0
+PyQtChart==5.13.0
+python-forecastio==1.4.0
+pytz>=2019.2
+geocoder>=1.38.1
