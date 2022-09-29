@@ -9,3 +9,8 @@ Also recommended but not required is virtualenv (pip3 install virtualenv)
 Since we can't do a pip install of pyqt5 on RPI, be sure to do this:
 
 https://gist.github.com/malachib/0477b4280bfad85130d42f8f60ef38cd
+
+# Dark Sky API
+
+"Update: support for the Dark Sky API will be ending on March 31st, 2023."
+They recommend moving to Apple's WeatherKit 
